@@ -1,0 +1,71 @@
+# ---------------------------
+# Global / OS files
+# ---------------------------
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ---------------------------
+# IDE / Editor files
+# ---------------------------
+
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# JetBrains (Rider, WebStorm, IntelliJ)
+.idea/
+*.iml
+
+# Visual Studio (not project-specific)
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ---------------------------
+# Programming language / tooling
+# ---------------------------
+
+# Node / React
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python (if any scripts)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
+
+# ---------------------------
+# Miscellaneous
+# ---------------------------
+
+# Temporary files
+*.swp
+*.lock
+*.log
+
+# Backup files
+*.bak
+*.old
+*.orig
+
+# Global ignore for NuGet packages cache (not repo-specific)
+# (Usually leave nuget packages in project .gitignore)
+# ~/.nuget/packages/
