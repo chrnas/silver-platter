@@ -33,39 +33,95 @@ Desktop.ini
 *.suo
 *.userosscache
 *.sln.docstates
+.vs/
 
 # ---------------------------
-# Programming language / tooling
+# Node / React / front-end tooling
 # ---------------------------
 
-# Node / React
+node_modules/
+dist/
+build/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnp.*
+.cache/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Python (if any scripts)
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.py[cod]
-*$py.class
+# ---------------------------
+# ASP.NET Core / .NET files
+# ---------------------------
+
+# Build results
+bin/
+obj/
+out/
+
+# Rider/JetBrains
+*.DotSettings.user
+
+# NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+*.psmdcp
+packages/
+# Global NuGet cache (usually leave outside repo)
+# ~/.nuget/packages/
+
+# VS Code workspace settings
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Rider
+.idea/
+
+# ASP.NET Core publish output
+publish/
+wwwroot/lib/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
+
+# User-specific files
+*.user
+*.suo
 
 # ---------------------------
 # Miscellaneous
 # ---------------------------
-
-# Temporary files
-*.swp
-*.lock
-*.log
 
 # Backup files
 *.bak
 *.old
 *.orig
 
-# Global ignore for NuGet packages cache (not repo-specific)
-# (Usually leave nuget packages in project .gitignore)
-# ~/.nuget/packages/
+# Swap files
+*.swp
+*.lock
+
+# Python caches (if you have any scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Docker (optional, if using containers)
+docker-compose.override.yml
+.env.docker
+
+# Optional: VS Code extensions
+.vscode-test/
+
