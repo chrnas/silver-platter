@@ -1,6 +1,6 @@
 ﻿namespace SilverPlatter.Server.Models
 {
-    public class Table
+    public class BookingTable
     {
         public int Id { get; set; }
         public string? Name { get; set; }
