@@ -2,10 +2,6 @@
     height: 100vh;
 }
 
-#Scaffold * {
-    outline: 2px dotted red;
-}
-
 #Scaffold {
     outline: 2px dotted yellow;
     width: 100%;
