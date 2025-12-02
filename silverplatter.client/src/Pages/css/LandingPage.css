@@ -16,11 +16,6 @@
     justify-content: center;
 }
 
-#Content img {
-    max-width: 500px;
-    height: auto;
-}
-
 #Background {
     order: 2;
     z-index: 1;
