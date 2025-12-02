@@ -1,4 +1,4 @@
-
+import './css/MyPage.css'
 
 function MyPage() {
     return (

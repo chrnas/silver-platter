@@ -1,0 +1,32 @@
+
+#LandingPage {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#Content {
+    background-color:rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    order: 1;
+    z-Index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Content img {
+    max-width: 500px;
+    height: auto;
+}
+
+#Background {
+    order: 2;
+    z-index: 1;
+    margin-top: -100vh;
+}
+
+#Background video {
+    width: 100%;
+}

@@ -1,4 +1,4 @@
-
+import './css/Browse.css'
 
 function Browse() {
     return (

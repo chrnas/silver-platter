@@ -2,7 +2,8 @@ import Header from './Pages/Header';
 import LandingPage from './Pages/LandingPage';
 import MyPage from './Pages/MyPage';
 import Browse from './Pages/Browse'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
 
 function App() {
     return (
