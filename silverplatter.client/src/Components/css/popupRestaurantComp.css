@@ -1,0 +1,12 @@
+
+
+.PopupRestaurant {
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(0, 255, 255, 0);
+}
+
+.PopupRestaurant img {
+    max-width: 500px;
+    height: auto;
+}
