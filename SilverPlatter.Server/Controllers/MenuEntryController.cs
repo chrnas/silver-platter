@@ -13,7 +13,6 @@ public class ResturantController : ControllerBase
     [HttpGet]
     public IActionResult GetAll()
     {
-
         try
         {
             var menuEntries = _repo.GetAll();
@@ -28,7 +27,6 @@ public class ResturantController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
-        
         try
         {
             var menuEntry = _repo.GetById(id);
@@ -95,17 +93,4 @@ public class ResturantController : ControllerBase
         }
         return NoContent();
     }
-
-    /*
-    
-  public interface IMenuEntryRepository
- {
-     List<MenuEntry> GetAll();
-     MenuEntry? GetById(int id);
-     MenuEntry Add(MenuEntry table);
-     MenuEntry Update(MenuEntry table);
-     void RemoveById(int id);
- }
-
-    */
 }
