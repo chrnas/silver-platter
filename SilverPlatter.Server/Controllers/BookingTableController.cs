@@ -43,7 +43,7 @@ public class BookingTableController : ControllerBase
         }
     }
 
-    [HttpPut]
+    [HttpPost]
     public IActionResult Create(BookingTable table)
     {
         try
@@ -58,7 +58,7 @@ public class BookingTableController : ControllerBase
 
     }
 
-    [HttpPost]
+    [HttpPut]
     public IActionResult Update(int id, BookingTable table)
     {
         if (id != table.Id)
