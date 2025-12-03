@@ -1,5 +1,5 @@
 
-#Header {
+.Header {
     width: 100vw;
     height: 5rem;
     display: flex;
@@ -9,7 +9,7 @@
     outline: solid 2px black;
 }
 
-#Menu {
+.Menu {
     display: flex;
     flex-direction: row;
     align-items: center;

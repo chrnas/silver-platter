@@ -5,12 +5,12 @@ function LandingPage() {
 
 
     return (
-        <div id="LandingPage">
-            <div id="Content">
+        <div className="LandingPage">
+            <div className="Content">
                 <PopupRestaurantComp/>
             </div>
 
-            <div id="Background">
+            <div className="Background">
                 <video autoPlay muted loop> 
                     <source src="src/assets/LandingBackground.mp4" type="video/mp4"/>
                 </video>

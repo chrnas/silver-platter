@@ -7,7 +7,7 @@ import './App.css';
 
 function App() {
     return (
-        <div id="Scaffold">
+        <div className="Scaffold">
             <Router>
                 <Header/>
                 <Routes>

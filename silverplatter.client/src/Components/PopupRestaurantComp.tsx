@@ -2,7 +2,7 @@ import './css/popupRestaurantComp.css'
 
 function PopupRestaurantComp() {
     return (
-        <div id="PopupRestaurant">
+        <div className="PopupRestaurant">
             <img 
                 src="src/assets/claim-your-i-was-here-button-v0-9tlo8368wdkf1.webp" 
             />

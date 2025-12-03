@@ -1,12 +1,12 @@
 
-#LandingPage {
+.LandingPage {
     width: 100vw;
     display: flex;
     flex-direction: column;
     position: relative;
 }
 
-#Content {
+.Content {
     background-color:rgba(0, 0, 0, 0.5);
     height: 100vh;
     order: 1;
@@ -16,12 +16,12 @@
     justify-content: center;
 }
 
-#Background {
+.Background {
     order: 2;
     z-index: 1;
     margin-top: -100vh;
 }
 
-#Background video {
+.Background video {
     width: 100%;
 }

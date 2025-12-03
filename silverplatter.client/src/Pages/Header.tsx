@@ -4,9 +4,9 @@ import './css/Header.css'
 
 function Header() {
     return (
-        <div id="Header">
+        <div className="Header">
             <PageLogo />
-            <div id="Menu">
+            <div className="Menu">
                 <PageButton name="Home" ref="/" />
                 <PageButton name="Browse" ref="/Browse" />
                 <PageButton name="My Page" ref="/MyPage" />
