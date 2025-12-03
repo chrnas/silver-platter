@@ -1,12 +1,61 @@
 
+.Frame {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    width: 70vw;
+}
 
 .PopupRestaurant {
     max-width: 500px;
     aspect-ratio: 1 / 1;
-    background-color: rgba(0, 255, 255, 0);
+    display: flex;
+    flex-direction: column;
+    border-radius: 5rem;
+    overflow: hidden;
+    outline: rgba(72, 32, 32, 0.663) 2px solid;
+}
+
+.PopupRestaurant:hover, .PopupRestaurant:hover img {
+    scale: 101%;
+}
+
+.Info {
+    height: 500px;
+    order: 1;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgba(85, 73, 38, 0.423);
+}
+
+.Info:hover {
+    background-color: rgba(87, 78, 50, 0.423);
+}
+.Button {
+    background-color: rgb(46, 72, 47);
+    outline: 2px white solid;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.Button:hover {
+    background-color: rgb(94, 171, 97);
+
 }
 
 .PopupRestaurant img {
     max-width: 500px;
     height: auto;
+    order: 2;
+    z-index: 1;
+    margin-top: -500px;
+}
+
+.PR_Name, .PR_Description {
+    margin-left: 2rem;
 }
