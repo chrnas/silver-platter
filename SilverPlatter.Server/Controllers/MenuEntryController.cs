@@ -1,11 +1,11 @@
 
 [ApiController]
 [Route("api/[controller]")]
-public class ResturantController : ControllerBase
+public class MenuEntryController : ControllerBase
 {
     private readonly IMenuEntryRepository _repo;
 
-    public ResturantController(IMenuEntryRepository menuEntryRepository)
+    public MenuEntryController(IMenuEntryRepository menuEntryRepository)
     {
         _repo = menuEntryRepository;   
     }
