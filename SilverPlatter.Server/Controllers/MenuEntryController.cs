@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using SilverPlatter.Server.Models;
+using SilverPlatter.Server.Repositories;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -16,12 +19,11 @@ public class MenuEntryController : ControllerBase
         try
         {
             var menuEntries = _repo.GetAll();
+            return Ok(menuEntries);
         } catch
         {
             return BadRequest("Failed to get all menuEntries");
         }
-        
-        return Ok(menuEntries);
     }
 
     [HttpGet("{id}")]
@@ -30,16 +32,16 @@ public class MenuEntryController : ControllerBase
         try
         {
             var menuEntry = _repo.GetById(id);
+            if (menuEntry == null)
+            {
+                return NotFound(); // No item found
+            }
+
+            return Ok(menuEntry);
         } catch
         {
             return BadRequest("Failed to get menuEntry by id");
         }
-        if (menuEntry == null)
-        {
-            return NotFound(); // No item found
-        }
-
-        return Ok(menuEntry);
     }
 
     [HttpPost]
@@ -48,12 +50,11 @@ public class MenuEntryController : ControllerBase
         try
         {
             var created = _repo.Add(entry);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         } catch
         {
             return BadRequest("Failed to add new item to the menu");
         }
-        
-        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
     [HttpPost]
@@ -67,12 +68,11 @@ public class MenuEntryController : ControllerBase
         try
         {
             var updated = _repo.Update(entry);
+            return Ok(updated);
         } catch
         {
             return BadRequest("Bad request for update to the repo");
         }
-
-        return Ok(updated);
     }
 
     [HttpDelete("{id}")]
@@ -87,10 +87,10 @@ public class MenuEntryController : ControllerBase
         try
         {
             _repo.RemoveById(id);
+            return NoContent();
         } catch
         {
             return BadRequest("Failed to remove MenuEntry by id");
         }
-        return NoContent();
     }
 }

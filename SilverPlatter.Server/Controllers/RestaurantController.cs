@@ -4,13 +4,13 @@ using SilverPlatter.Server.Repositories;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BookingTableController : ControllerBase
+public class RestaurantController : ControllerBase
 {
-    private readonly IBookingTableRepository _repo;
+    private readonly IRestaurantRepository _repo;
 
-    public BookingTableController(IBookingTableRepository bookingTableRepository)
+    public RestaurantController(IRestaurantRepository restaurantRepository)
     {
-        _repo = bookingTableRepository;   
+        _repo = restaurantRepository;   
     }
 
     [HttpGet]
@@ -18,12 +18,12 @@ public class BookingTableController : ControllerBase
     {
         try
         {
-            var tables = _repo.GetAll();
-            return Ok(tables);
+            var restaurants = _repo.GetAll();
+            return Ok(restaurants);
         } catch
         {
-            return BadRequest("Failed to get all tables");
-        }
+            return BadRequest("Failed to get all restaurants");
+        }      
     }
 
     [HttpGet("{id}")]
@@ -31,49 +31,47 @@ public class BookingTableController : ControllerBase
     {
         try
         {
-            var bookingTable = _repo.GetById(id);
-            if (bookingTable == null)
+            var restaurant = _repo.GetById(id);
+            if (restaurant == null)
             {
-                return NotFound(); // No item found
+                return NotFound(); // No restaurant found
             }
-            return Ok(bookingTable);
+            return Ok(restaurant);
         } catch
         {
-            return BadRequest("Failed to get booking table by id");
+            return BadRequest("Failed to get restaurant by id");
         }
     }
 
     [HttpPost]
-    public IActionResult Create(BookingTable table)
+    public IActionResult Create(Restaurant restaurant)
     {
         try
         {
-            var created = _repo.Add(table);
-                    
+            var created = _repo.Add(restaurant);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         } catch
         {
-            return BadRequest("Failed to add new table to the resturant");
+            return BadRequest("Failed to add new resturant");
         }
-
     }
 
     [HttpPost]
-    public IActionResult Update(int id, BookingTable table)
+    public IActionResult Update(int id, Restaurant restaurant)
     {
-        if (id != table.Id)
+        if (id != restaurant.Id)
         {
-            return BadRequest("given id and table id are not the same");
+            return BadRequest("given id and restaurant id are not the same");
         }
 
         try
         {
-            var updated = _repo.Update(table);
+            var updated = _repo.Update(restaurant);
             return Ok(updated);
         } catch
         {
             return BadRequest("Bad request for update to the repo");
-        }    
+        }
     }
 
     [HttpDelete("{id}")]
@@ -91,7 +89,7 @@ public class BookingTableController : ControllerBase
             return NoContent();
         } catch
         {
-            return BadRequest("Failed to remove booking table by id");
-        }   
+            return BadRequest("Failed to remove restaurant by id");
+        }
     }
 }
