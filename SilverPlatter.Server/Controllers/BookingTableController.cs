@@ -43,7 +43,7 @@ public class BookingTableController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpPut]
     public IActionResult Create(BookingTable table)
     {
         try

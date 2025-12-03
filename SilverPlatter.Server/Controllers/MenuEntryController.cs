@@ -57,7 +57,7 @@ public class MenuEntryController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpPut]
     public IActionResult Update(int id, MenuEntry entry)
     {
         if (id != entry.Id)
