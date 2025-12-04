@@ -6,7 +6,7 @@ function Header() {
     return (
         <div className="Header">
             <PageLogo />
-            <div className="Menu">
+            <div className="HeaderItems">
                 <PageButton name="Home" ref="/" />
                 <PageButton name="Browse" ref="/Browse" />
                 <PageButton name="My Page" ref="/MyPage" />

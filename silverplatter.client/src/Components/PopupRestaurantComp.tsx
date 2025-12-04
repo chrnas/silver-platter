@@ -10,7 +10,7 @@ function SkipRestaurant(restaurant : Restaurant) {
 
 function PopupRestaurantComp(props : { restaurant : Restaurant}) {
     let nav = useNavigate();
-    let ref = "/MyPage"
+    let ref = "Template"
 
     return (
         <div className='Frame'>
@@ -23,10 +23,10 @@ function PopupRestaurantComp(props : { restaurant : Restaurant}) {
                     </div>
                 </div>
                 <img
-                    src="src/assets/claim-your-i-was-here-button-v0-9tlo8368wdkf1.webp" 
+                    src="src/assets/pexels-life-of-pix-67468.jpg" 
                 />
             </div>
-            <button className='Button' onClick={() => nav(ref)}>Go to</button>
+            <button className='Button' onClick={() => nav("/Restaurants/"+ref)}>Go to</button>
         </div>
     )
 }

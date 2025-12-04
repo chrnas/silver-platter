@@ -5,11 +5,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: rgb(61, 79, 47);
+    background-color: var(--secondary-bg);
     outline: solid 2px white;
 }
 
-.Menu {
+.HeaderItems {
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -10,7 +10,7 @@ function LandingPage() {
     }
 
     return (
-        <div className="LandingPage">
+        <main className="LandingPage">
             <div className="Content">
                 <PopupRestaurantComp restaurant={tempRestaurant}/>
             </div>
@@ -20,7 +20,7 @@ function LandingPage() {
                     <source src="src/assets/LandingBackground.mp4" type="video/mp4"/>
                 </video>
             </div>
-        </div>
+        </main>
     )
 }
 

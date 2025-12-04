@@ -36,20 +36,14 @@
     background-color: rgba(87, 78, 50, 0.423);
 }
 .Button {
-    background-color: rgb(46, 72, 47);
     outline: 2px white solid;
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
 }
 
-.Button:hover {
-    background-color: rgb(94, 171, 97);
-
-}
-
 .PopupRestaurant img {
-    max-width: 500px;
+    min-height: 500px;
     height: auto;
     order: 2;
     z-index: 1;

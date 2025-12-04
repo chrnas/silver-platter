@@ -1,4 +1,4 @@
-import RestaurantButton from '../Components/restaurantButton';
+import RestaurantButton from '../Components/RestaurantButton';
 import './css/MyPage.css'
 
 function MyPage() {
@@ -11,8 +11,6 @@ function MyPage() {
 
     return (
         <div>
-            MyPage
-
             <div className='FavoriteRestaurants'>
                 <RestaurantButton restaurant={tempRestaurant}/>
             </div>

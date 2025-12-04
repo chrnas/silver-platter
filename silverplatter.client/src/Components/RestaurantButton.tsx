@@ -3,7 +3,7 @@ import './css/RestaurantButton.css'
 
 function RestaurantButton(props : { restaurant : Restaurant}) {
     return (
-        <div>
+        <div className='Button'>
             {props.restaurant.Name}
         </div>
     )
