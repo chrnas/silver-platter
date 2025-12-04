@@ -1,27 +1,41 @@
-
 .LandingPage {
     width: 100vw;
     display: flex;
     flex-direction: column;
-    position: relative;
+    min-height: calc(100vh - 5rem);;           /* use min-height so background covers full viewport */
+    position: relative;          /* allow absolutely positioned background */
+    overflow: hidden;            /* keep video clipped to viewport */
 }
 
 .Content {
-    background-color:rgba(0, 0, 0, 0.5);
-    height: 100vh;
-    order: 1;
-    z-Index: 2;
+    position: relative;          
+    background-color: rgba(0, 0, 0, 0.5);
+    /* account for the 5rem header so content centers in remaining viewport */
+    height: calc(100vh - 5rem);
+    z-index: 2;                  
     display: flex;
     align-items: center;
     justify-content: center;
+    outline: dotted red 1px;
 }
 
+/* Background positioned below header (5rem) and behind content */
 .Background {
-    order: 2;
-    z-index: 1;
-    margin-top: -100vh;
+    position: absolute;
+    top: 0;                   /* start below the header */
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;                  /* behind .Content (z-index:2) */
+    pointer-events: none;
+    max-height: calc(100vh - 5rem);
+    overflow: hidden;            /* prevent video from overflowing and producing scrollbars */
 }
 
+/* Center & cover the video so it always fills the container without overflow */
 .Background video {
-    width: 100%;
+    position: absolute;
+    width: auto;
+    height: auto;
+    object-fit: cover;
 }

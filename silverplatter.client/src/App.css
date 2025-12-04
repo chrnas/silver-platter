@@ -1,10 +1,23 @@
 ﻿#root {
+    --secondary-bg: rgb(61, 79, 47);
+    --accent: #ff7a59;
+    --accent-hover: #f7947b;
+
     height: 100vh;
 }
 
 .Scaffold {
-    outline: 2px dotted yellow;
     width: 100%;
     max-height: 100vh;
-    overflow-y: hidden;
+}
+
+button {
+    background-color: var(--accent);
+    outline: 1px white solid;
+}
+
+button:hover {
+    background-color: var(--accent-hover);
+    outline: 1px rgb(116, 176, 110) solid;
+    transition: ease 300ms;
 }
