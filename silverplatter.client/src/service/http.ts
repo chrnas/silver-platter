@@ -1,4 +1,4 @@
-const API_BASE = "PLACE LOCALHOST API BASE HERE WHEN WE CAN TEST";
+const API_BASE = "http://localhost:5218/api";
 
 async function http<T>(url: string, options?: RequestInit): Promise<T> {
     const response = await fetch(`${API_BASE}/${url}`, {
@@ -13,7 +13,7 @@ async function http<T>(url: string, options?: RequestInit): Promise<T> {
         throw new Error(message || "API error");
     }
 
-    return response.json as T; 
+    return response.json(); 
 }
 
 export default http;

@@ -1,7 +1,7 @@
 import type { MenuItem } from "../Types/MenuItem";
 import http from "./http";
 
-export const menuEntryApi = {
+export const menuEntryService = {
     getAll: async (): Promise<MenuItem[]> => http<MenuItem[]>("menuentry"),
 
     getById: async (id: number): Promise<MenuItem> => http<MenuItem>(`menuentry/id=${id}`),

@@ -3,7 +3,7 @@ import http from "./http";
 
 // Check names name in frontend of type BookavbleTable, backend bookingtablecontroller
 
-export const bookingTableApi = {
+export const bookingTableService = {
     getAll: async (): Promise<BookableTable[]> => http<BookableTable[]>("bookingtable"),
     
     getById: async (id: number): Promise<BookableTable> => http<BookableTable>(`bookingtable/id=${id}`),

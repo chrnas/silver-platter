@@ -1,7 +1,7 @@
 import type { Restaurant } from "../Types/Restaurant";
 import http from "./http";
 
-export const restaurantApi = {
+export const restaurantService = {
     getAll: async (): Promise<Restaurant[]> => http<Restaurant[]>(`restaurant`),
 
     getById: async (id: number): Promise<Restaurant> => http<Restaurant>(`restaurant/id=${id}`),
