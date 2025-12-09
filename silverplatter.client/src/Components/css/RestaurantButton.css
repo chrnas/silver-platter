@@ -1,0 +1,14 @@
+
+
+#SingleRestaurantButton {
+    height: 8rem;
+    background-color: rgb(208, 208, 208);
+    border-bottom: rgb(25, 84, 25) 1em solid;
+    border-top: rgb(255, 206, 180) solid 1em;
+    color: black;
+}
+
+.RestaurantName {
+    margin-top: -1px;
+    padding-left: 1rem;
+}

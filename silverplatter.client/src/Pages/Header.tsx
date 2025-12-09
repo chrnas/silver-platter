@@ -6,11 +6,11 @@ function Header() {
     return (
         <div className="Header">
             <PageLogo />
-            <div className="HeaderItems">
+            <nav className="HeaderItems">
                 <PageButton name="Home" ref="/" />
                 <PageButton name="Browse" ref="/Browse" />
                 <PageButton name="My Page" ref="/MyPage" />
-            </div>
+            </nav>
         </div>
     )
 }

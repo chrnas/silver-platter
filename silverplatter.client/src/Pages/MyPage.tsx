@@ -10,9 +10,30 @@ function MyPage() {
     }
 
     return (
-        <div>
-            <div className='FavoriteRestaurants'>
-                <RestaurantButton restaurant={tempRestaurant}/>
+        <div style={{height: "calc(100vh - 5rem)"}}>
+            <div id="MyPageBody">
+                <section className='FavoriteRestaurants'>
+                    <h1>My Favorite Restaurants</h1>
+                    <RestaurantButton restaurant={tempRestaurant}/>
+                    <RestaurantButton restaurant={tempRestaurant}/>
+                    <RestaurantButton restaurant={tempRestaurant}/>
+                    <RestaurantButton restaurant={tempRestaurant}/>
+                </section>
+
+                <section className='Profile'>
+                    <div id="ProfileHeader">
+                        <img src="" alt="" />
+                        <h1>Profile</h1>
+                    </div>
+                    <div id='ProfileSettings'>
+                        <nav>
+                            <input type="text" name="" id="" />
+                            <input type="text" name="" id="" />
+                            <input type="text" name="" id="" />
+                            <input type="text" name="" id="" />
+                        </nav>
+                    </div>
+                </section>
             </div>
         </div>
     )
