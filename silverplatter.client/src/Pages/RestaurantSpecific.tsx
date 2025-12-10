@@ -1,7 +1,9 @@
 import Gallery from "../Components/Gallery";
 import Menu from "../Components/Menu";
 import "./css/RestaurantSpecific.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { restaurantService } from "../Services/restaurantService";
+import type { Restaurant } from "../Types/Restaurant";
 
 function bookTable() {
     // Something
@@ -12,6 +14,14 @@ function RestaurantSpecific() {
     const [bgColor, setBgColor] = useState("#007bff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
+    const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+
+    useEffect(() => {
+        restaurantService.getById(1).then((data: any) => {
+            setRestaurant(data);
+        });
+        console.log(restaurant);
+    }, []);
 
     let tempRestaurant = {
         Id: 0,
