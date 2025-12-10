@@ -7,6 +7,6 @@ namespace SilverPlatter.Server.Repositories
         MenuEntry? GetById(int id);
         MenuEntry Add(MenuEntry table);
         MenuEntry Update(MenuEntry table);
-        void RemoveById(int id);
+        bool RemoveById(int id);
     }
 }
