@@ -1,0 +1,39 @@
+@import url("../../colorPalette.css");
+
+#SingleRestaurantButton {
+    height: 8rem;
+
+    /* base color for the right area (visible where gradient is fully opaque) */
+    background-color: var(--secondary-bg);
+
+    /* 
+       Strategy:
+       - Put the image as the bottom layer (covers whole button).
+       - Put a gradient on top that is solid color at the right edge and fades to transparent
+         over ~30% of the width (so ~70% of the left shows the image).
+       - Use full-size layers so the gradient blends smoothly instead of a hard cutoff.
+    */
+    background-image:
+        linear-gradient(to left, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.85) 25%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.3) 75%),
+        url('/src/assets/pexels-life-of-pix-67468.jpg');
+    /* gradient is painted on top (first), image underneath */
+    background-position: right center, left center;
+    background-size: 100% 400px, 100% 400px;
+    background-repeat: no-repeat, no-repeat;
+    background-position-y: 0, -200px;
+
+    /* keep the original borders/colors */
+    border-top: var(--secondary-bg) solid 5px;
+    color: var(--secondary-fg);
+    text-shadow: rgb(0, 23, 2) 3px 1px;
+    text-align: start;
+}
+
+.RestaurantName {
+    margin-top: -3rem;
+}
+
+#SingleRestaurantButton:hover {
+    color: var(--secondary-fg-hover);    
+    border-top: var(--secondary-bg-hover) solid 5px;
+}

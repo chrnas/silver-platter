@@ -162,7 +162,7 @@ namespace SilverPlatter.Server.Repositories
             throw new Exception($"MenuEntry with ID {entry.Id} was updated but could not be retrieved.");
         }
 
-        public void RemoveById(int id)
+        public bool RemoveById(int id)
         {
             using MySqlConnection connection = new MySqlConnection(_connectionString);
             connection.Open();
@@ -174,8 +174,9 @@ namespace SilverPlatter.Server.Repositories
                 WHERE MenuEntryId = @id;
             ";
             command.Parameters.AddWithValue("@id", id);
+            int rowsAffected = command.ExecuteNonQuery();
 
-            command.ExecuteNonQuery();
+            return rowsAffected > 0;// return true if at least one row was deleted
         }
     }
 }

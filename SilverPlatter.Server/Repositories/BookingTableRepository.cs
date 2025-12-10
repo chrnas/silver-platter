@@ -169,7 +169,7 @@ namespace SilverPlatter.Server.Repositories
             throw new Exception($"BookingTable with ID {table.Id} was updated but could not be retrieved.");
         }
 
-        public void RemoveById(int id)
+        public bool RemoveById(int id)
         {
             using MySqlConnection connection = new MySqlConnection(_connectionString);
             connection.Open();
@@ -181,8 +181,9 @@ namespace SilverPlatter.Server.Repositories
                 WHERE BookingTableId = @id;
             ";
             command.Parameters.AddWithValue("@id", id);
+            int rowsAffected = command.ExecuteNonQuery();
 
-            command.ExecuteNonQuery();
+            return rowsAffected > 0;// return true if at least one row was deleted
         }
     }
 }

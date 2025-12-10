@@ -8,6 +8,6 @@ namespace SilverPlatter.Server.Repositories
         BookingTable? GetById(int id);
         BookingTable Add(BookingTable table);
         BookingTable Update(BookingTable table);
-        void RemoveById(int id);
+        bool RemoveById(int id);
     }
 }

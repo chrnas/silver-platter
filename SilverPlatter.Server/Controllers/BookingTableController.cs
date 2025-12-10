@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SilverPlatter.Server.Models;
 using SilverPlatter.Server.Repositories;
+using System.Text.RegularExpressions;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -58,7 +59,7 @@ public class BookingTableController : ControllerBase
 
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public IActionResult Update(int id, BookingTable table)
     {
         if (id != table.Id)
@@ -79,19 +80,17 @@ public class BookingTableController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var existing = _repo.GetById(id);
-        if (existing == null)
-        {
-            return NotFound();
-        }
-
         try
         {
-            _repo.RemoveById(id);
+            bool isRemoved = _repo.RemoveById(id);
+            if (!isRemoved)
+            {
+                return NotFound();
+            }
             return NoContent();
         } catch
         {
             return BadRequest("Failed to remove booking table by id");
-        }   
+        }
     }
 }

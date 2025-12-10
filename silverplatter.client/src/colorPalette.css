@@ -1,0 +1,20 @@
+#root {
+    --primary-bg: rgb(255, 255, 255);
+    --primary-bg-hover: rgb(224, 208, 177);
+
+
+    --secondary-bg: rgb(94, 85, 71);
+    --secondary-bg-hover: rgb(117, 106, 71);
+
+    --primary-fg: rgb(48, 48, 48);
+    --primary-fg-hover: rgb(13, 47, 3);
+
+    --secondary-fg: white;
+    --secondary-fg-hover: rgb(222, 255, 211);
+    
+    --seperator: rgb(85, 110, 66);;
+
+    --accent: #ce6348;
+    --accent-active: #ffffff;
+    --accent-hover: #f7947b;
+}
