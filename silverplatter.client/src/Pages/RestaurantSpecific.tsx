@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Gallery from "../Components/Gallery";
 import Menu from "../Components/Menu";
 import "./css/RestaurantSpecific.css"
@@ -7,6 +8,7 @@ function bookTable() {
 }
 
 function RestaurantSpecific() {
+    const [saved, setSaved] = useState<Boolean>(false);
     let tempRestaurant = {
         Id: 0,
         Name: "Temporary Restaurant",
@@ -35,8 +37,8 @@ function RestaurantSpecific() {
                     <button id="BookButton" onClick={() => bookTable()}>
                         <h2>Book Table</h2>
                     </button>
-                    <button id="SaveButton" onClick={() => bookTable()}>
-                        <h2>Save to My Page</h2>
+                    <button id="SaveButton" onClick={() => setSaved(!saved)} style={saved ? {backgroundColor: "darkred"} : {}}>
+                        <h2>{!saved ? "Save to My Page" : "Remove from My Page"}</h2>
                     </button>
                 </section>
             </div>
