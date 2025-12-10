@@ -1,12 +1,18 @@
 import Gallery from "../Components/Gallery";
 import Menu from "../Components/Menu";
 import "./css/RestaurantSpecific.css"
+import { useState } from "react";
 
 function bookTable() {
     // Something
 }
 
 function RestaurantSpecific() {
+    const [isRestaurantOwner] = useState(true);
+    const [bgColor, setBgColor] = useState("#007bff"); // default background
+    const [textColor, setTextColor] = useState("#ffffff"); // default text
+    const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
+
     let tempRestaurant = {
         Id: 0,
         Name: "Temporary Restaurant",
@@ -15,7 +21,13 @@ function RestaurantSpecific() {
     }
 
     return (
-        <div className="RestaurantFrontpage">
+        <div className={`RestaurantFrontPage custom-theme`}  
+            style={{
+                "--theme-bg": bgColor,
+                "--theme-text": textColor,
+                "--flex-direction": flexDirection // CSS variable for layout
+            } as React.CSSProperties}
+        >
             <div className="RestaurantFrontSection">
                 <div className="RestaurantHeader">
                     <h1>{tempRestaurant.Name}</h1>
@@ -40,6 +52,43 @@ function RestaurantSpecific() {
                     </button>
                 </section>
             </div>
+
+            {isRestaurantOwner && (
+                <section className="EditRestaurant">
+                <div>
+                    <label>
+                    Background color:{" "}
+                    <input
+                        type="color"
+                        value={bgColor}
+                        onChange={(e) => setBgColor(e.target.value)}
+                    />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                    Text color:{" "}
+                    <input
+                        type="color"
+                        value={textColor}
+                        onChange={(e) => setTextColor(e.target.value)}
+                    />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Layout direction:{" "}
+                        <select
+                            value={flexDirection}
+                            onChange={(e) => setFlexDirection(e.target.value as "row" | "column")}
+                        >
+                            <option value="row">Row</option>
+                            <option value="column">Column</option>
+                        </select>
+                    </label>
+                </div>
+                </section>
+            )}
 
             <section className="Utilities">
                 <div className="Menu">
