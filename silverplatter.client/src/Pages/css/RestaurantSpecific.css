@@ -11,6 +11,14 @@
     overflow-x: hidden;
 }
 
+/* Custom theme */
+.custom-theme {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  flex-direction: var(--flex-direction);
+}
+
+
 .RestaurantFrontSection {
     background-image: url("/src/assets/2431225-uhd_3840_2160_24fps.gif");
     background-size: 100vw;
