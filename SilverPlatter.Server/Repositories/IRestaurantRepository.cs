@@ -8,6 +8,6 @@ namespace SilverPlatter.Server.Repositories
         Restaurant? GetById(int id);
         Restaurant Add(Restaurant restuarant);
         Restaurant Update(Restaurant restuarant);
-        void RemoveById(int id);
+        bool RemoveById(int id);
     }
 }

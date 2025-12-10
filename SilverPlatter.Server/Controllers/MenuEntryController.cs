@@ -78,15 +78,13 @@ public class MenuEntryController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var existing = _repo.GetById(id);
-        if (existing == null)
-        {
-            return NotFound();
-        }
-
         try
         {
-            _repo.RemoveById(id);
+            bool isRemoved = _repo.RemoveById(id);
+            if (!isRemoved)
+            {
+                return NotFound();
+            }
             return NoContent();
         } catch
         {

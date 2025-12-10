@@ -155,7 +155,7 @@ namespace SilverPlatter.Server.Repositories
             throw new Exception($"Restaurant with ID {restaurant.Id} was updated but could not be retrieved.");
         }
 
-        public void RemoveById(int id)
+        public bool RemoveById(int id)
         {
             using MySqlConnection connection = new MySqlConnection(_connectionString);
             connection.Open();
@@ -164,8 +164,9 @@ namespace SilverPlatter.Server.Repositories
             command.Connection = connection;
             command.CommandText = @"DELETE FROM Restaurants WHERE RestaurantId = @id;";
             command.Parameters.AddWithValue("@id", id);
+            int rowsAffected = command.ExecuteNonQuery();
 
-            command.ExecuteNonQuery();
+            return rowsAffected > 0;// return true if at least one row was deleted
         }
     }
 }
