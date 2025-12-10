@@ -9,6 +9,19 @@ builder.Services.AddScoped<IMenuEntryRepository, MenuEntryRepository>();
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddScoped<IBookingTableRepository, BookingTableRepository>();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactLocalhost", policy =>
+    {
+        policy.WithOrigins(
+            "https://localhost:51054",
+            "http://localhost:51054"
+        ).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    }); 
+}); // Cross connections with https and http
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -24,6 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowReactLocalhost"); // Localhost fixing
 
 app.UseHttpsRedirection();
 

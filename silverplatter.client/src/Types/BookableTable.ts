@@ -1,9 +1,9 @@
 
 
 export interface BookableTable {
-    Id: number;
-    Name: string;
-    Description: string;
-    Places: number;
-    RestaurantId: number;
+    id: number;
+    name: string;
+    description: string;
+    places: number;
+    restaurantId: number;
 }

@@ -59,7 +59,7 @@ public class BookingTableController : ControllerBase
 
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public IActionResult Update(int id, BookingTable table)
     {
         if (id != table.Id)

@@ -56,7 +56,7 @@ public class RestaurantController : ControllerBase
         }
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public IActionResult Update(int id, Restaurant restaurant)
     {
         if (id != restaurant.Id)
