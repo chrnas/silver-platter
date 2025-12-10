@@ -50,7 +50,20 @@ export default defineConfig({
             '^/weatherforecast': {
                 target,
                 secure: false
+            },
+            '^/api/bookingtable' : {
+                target,
+                secure: false
+            },
+            '^/api/menuentry' : {
+                target,
+                secure: false
+            },
+            '^/api/restaurant' : {
+                target,
+                secure: false
             }
+            
         },
         port: parseInt(env.DEV_SERVER_PORT || '51054'),
         https: {

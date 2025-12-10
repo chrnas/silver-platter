@@ -1,22 +1,88 @@
 import type { Restaurant } from "../Types/Restaurant";
-import http from "./http";
 
 export const restaurantService = {
-    getAll: async (): Promise<Restaurant[]> => http<Restaurant[]>(`restaurant`),
+    getAll: async (): Promise<Restaurant[]> => {
+        const response = await fetch(`api/restaurant`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
-    getById: async (id: number): Promise<Restaurant> => http<Restaurant>(`restaurant/id=${id}`),
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
 
-    create: async (entry: Omit<Restaurant, "id">): Promise<Restaurant> => http<Restaurant>(`restaurant`, {
-        method: "POST",
-        body: JSON.stringify(entry),
-    }),
+        return response.json();
+    },
 
-    update: async (entry: Restaurant): Promise<Restaurant> => http<Restaurant>(`restaurant/id=${entry.Id}`, {
-        method: "PUT",
-        body: JSON.stringify(entry),
-    }),
+    getById: async (id: number): Promise<Restaurant> => {
+        const response = await fetch(`api/restaurant/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
 
-    delete: async (id: number): Promise<void> => http<void>(`restaurant/id=${id}`, {
-        method: "DELETE",
-    }),
-}
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+
+    create: async (entry : Omit<Restaurant, "id">): Promise<Restaurant> => {
+        const response = await fetch(`api/restaurant`, {
+            headers: {
+                "Content-Type": "application/json"
+            }, 
+            method: "POST",
+            body: JSON.stringify(entry),
+
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+    
+    update: async (entry: Restaurant): Promise<Restaurant> => {
+        const response = await fetch(`api/restaurant/${entry.id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify(entry),
+
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+        
+
+    delete: async (id: number): Promise<void> => {
+        const response = await fetch(`api/restaurant/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+};
+
+// Needs to be checked and tested so that formatting is correct and everything works, especially the paths 

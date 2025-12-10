@@ -1,24 +1,86 @@
 import type { BookableTable } from "../Types/BookableTable";
-import http from "./http";
-
-// Check names name in frontend of type BookavbleTable, backend bookingtablecontroller
 
 export const bookingTableService = {
-    getAll: async (): Promise<BookableTable[]> => http<BookableTable[]>("bookingtable"),
+    getAll: async (): Promise<BookableTable[]> => {
+        const response = await fetch(`api/bookingtable`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+
+    getById: async (id: number): Promise<BookableTable> => {
+        const response = await fetch(`api/bookingtable/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+
+    create: async (entry : Omit<BookableTable, "id">): Promise<BookableTable> => {
+        const response = await fetch(`api/bookingtable`, {
+            headers: {
+                "Content-Type": "application/json"
+            }, 
+            method: "POST",
+            body: JSON.stringify(entry),
+
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
     
-    getById: async (id: number): Promise<BookableTable> => http<BookableTable>(`bookingtable/id=${id}`),
+    update: async (entry: BookableTable): Promise<BookableTable> => {
+        const response = await fetch(`api/bookingtable/${entry.id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify(entry),
 
-    create: async (entry: Omit<BookableTable, "id">): Promise<BookableTable> => http<BookableTable>(`bookingtable`, {
-        method: "POST",
-        body: JSON.stringify(entry),
-    }),
+        });
 
-    update: async (entry: BookableTable): Promise<BookableTable> => http<BookableTable>(`bookingtable/id=${entry.Id}`, {
-        method: "PUT",
-        body: JSON.stringify(entry),
-    }),
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
 
-    delete: async (id: number): Promise<void> => http<void>(`bookingtable/id=${id}`, {
-        method: "DELETE"
-    }),
-}
+        return response.json();
+    },
+        
+
+    delete: async (id: number): Promise<void> => {
+        const response = await fetch(`api/bookingtable/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "DELETE"
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+};
