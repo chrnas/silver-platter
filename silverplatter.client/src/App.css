@@ -1,14 +1,12 @@
-﻿#root {
-    --secondary-bg: rgb(61, 79, 47);
-    --accent: #ff7a59;
-    --accent-hover: #f7947b;
+﻿@import url('./colorPalette.css');
 
+#root {
     height: 100vh;
 }
 
 .Scaffold {
     width: 100%;
-    max-height: 100vh;
+    height: 100vh;
 }
 
 button {
