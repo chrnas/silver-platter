@@ -7,7 +7,7 @@ function RestaurantButton(props : { restaurant : Restaurant}) {
     let ref = "Template"
     return (
         <button onClick={() => nav("/Restaurants/" + ref)} id='SingleRestaurantButton'>
-            <h2 className='RestaurantName'>{props.restaurant.Name}</h2>
+            <h2 className='RestaurantName'>{props.restaurant.name}</h2>
         </button>
     )
 }

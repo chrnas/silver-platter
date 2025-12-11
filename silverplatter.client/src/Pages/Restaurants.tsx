@@ -1,12 +1,30 @@
 import { Outlet } from 'react-router-dom';
-import './css/Browse.css'
+import RestaurantButton from '../Components/RestaurantButton';
+import './css/Browse.css';
+import { useEffect, useState } from 'react';
+import { restaurantService } from '../service/RestaurantService';
+import type { Restaurant } from '../Types/Restaurant';
 
 function Restaurants() {
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+
+    useEffect(() => {
+        restaurantService.getAll()
+            .then(data => setRestaurants(data))
+            .catch(console.error);
+    }, []);
+
     return (
         <div>
-            <Outlet /> 
+            {restaurants.map(restaurant => (
+                <RestaurantButton
+                    key={restaurant.id}
+                    restaurant={restaurant}
+                />
+            ))}
+            <Outlet />
         </div>
-    )
+    );
 }
 
 export default Restaurants;

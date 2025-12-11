@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
 import Gallery from "../Components/Gallery";
 import Menu from "../Components/Menu";
 import "./css/RestaurantSpecific.css"
-import { useEffect, useState } from "react";
-import { restaurantService } from "../Services/restaurantService";
+import { restaurantService } from "../service/RestaurantService";
 import type { Restaurant } from "../Types/Restaurant";
 
 function bookTable() {
-    // Something
+    return false;
 }
 
 function RestaurantSpecific() {
@@ -15,22 +15,14 @@ function RestaurantSpecific() {
     const [bgColor, setBgColor] = useState("#007bff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
-    const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+    const [restaurant, setRestaurant] = useState<Restaurant>();
 
     useEffect(() => {
-        restaurantService.getById(1).then((data: any) => {
+        restaurantService.getById(1).then(data => {
+            console.log(data);
             setRestaurant(data);
         });
-        console.log(restaurant);
     }, []);
-
-    let tempRestaurant = {
-        Id: 0,
-        Name: "Temporary Restaurant",
-        Description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
-        Address: "Tempstreet 23, Tempköping"
-    }
-
     return (
         <div className={`RestaurantFrontPage custom-theme`}  
             style={{
@@ -41,13 +33,13 @@ function RestaurantSpecific() {
         >
             <div className="RestaurantFrontSection">
                 <div className="RestaurantHeader">
-                    <h1>{tempRestaurant.Name}</h1>
-                    <h3 id="Address">{tempRestaurant.Address}</h3>
+                    <h1>{restaurant?.name}</h1>
+                    <h3 id="Address">{restaurant?.address}</h3>
                 </div>
 
                 <section className="Information">
                     <div className="Description">
-                        <h3>{tempRestaurant.Description}</h3>
+                        <h3>{restaurant?.description}</h3>
                     </div>
                     <div className="Accolades">
 
