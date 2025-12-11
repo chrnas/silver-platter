@@ -25,3 +25,12 @@ CREATE TABLE BookingTables (
     RestaurantId INT NOT NULL,
     FOREIGN KEY (RestaurantId) REFERENCES Restaurants(RestaurantId) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE Users (
+    UserId INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    RestaurantFavorites JSON,
+    Budget INT NOT NULL,
+    Allergies JSON,
+    PreferedRating INT NOT NULL, 
+) ENGINE=InnoDB

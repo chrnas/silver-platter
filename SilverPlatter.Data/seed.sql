@@ -19,3 +19,6 @@ INSERT INTO BookingTables (Name, Description, Places, RestaurantId) VALUES
 ('Table 2', 'Near entrance', 2, 2),
 ('Table 1', 'Central area', 6, 3),
 ('Table 2', 'Quiet corner', 4, 3);
+
+INSERT INTO Users (Name, RestaurantFavorites, Budget, Allergies, PreferedRating) VALUES
+('John Testing', '[1, 2]', 400, '[Gluten]', 3)
