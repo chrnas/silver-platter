@@ -2,7 +2,7 @@ import type { BookableTable } from "../Types/BookableTable";
 
 export const bookingTableService = {
     getAll: async (): Promise<BookableTable[]> => {
-        const response = await fetch(`api/bookingtable`, {
+        const response = await fetch(`/api/bookingtable`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -17,7 +17,7 @@ export const bookingTableService = {
     },
 
     getById: async (id: number): Promise<BookableTable> => {
-        const response = await fetch(`api/bookingtable/${id}`, {
+        const response = await fetch(`/api/bookingtable/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             }

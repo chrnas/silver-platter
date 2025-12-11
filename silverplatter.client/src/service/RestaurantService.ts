@@ -17,7 +17,7 @@ export const restaurantService = {
     },
 
     getById: async (id: number): Promise<Restaurant> => {
-        const response = await fetch(`api/restaurant/${id}`, {
+        const response = await fetch(`/api/restaurant/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             }
