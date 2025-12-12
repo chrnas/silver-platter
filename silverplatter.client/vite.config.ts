@@ -66,6 +66,14 @@ export default defineConfig({
             '^/api/user' : {
                 target,
                 secure: false
+            },
+            '^/api/Allergy' : {
+                target,
+                secure: false
+            },
+            '^/api/RestaurantFavorite' : {
+                target, 
+                secure: false
             }
             
         },
