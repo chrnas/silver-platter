@@ -29,8 +29,21 @@ CREATE TABLE BookingTables (
 CREATE TABLE Users (
     UserId INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
-    RestaurantFavorites JSON,
     Budget INT NOT NULL,
-    Allergies JSON,
-    PreferedRating INT NOT NULL, 
-) ENGINE=InnoDB
+    PreferedRating INT NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE Allergies (
+    AllergiesId INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    UserId INT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE RestaurantFavorites (
+    RestaurantFavoritesId INT AUTO_INCREMENT PRIMARY KEY,
+    UserId INT NOT NULL,
+    RestaurantId INT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(UserId) ON DELETE CASCADE,
+    FOREIGN KEY (RestaurantId) REFERENCES Restaurants(RestaurantId) ON DELETE CASCADE
+) ENGINE=InnoDB;
