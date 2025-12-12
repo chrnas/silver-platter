@@ -31,6 +31,21 @@ export const restaurantService = {
         return response.json();
     },
 
+    getRandom: async (): Promise<Restaurant> => {
+        const response = await fetch(`api/restaurant/random`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+
     create: async (entry : Omit<Restaurant, "id">): Promise<Restaurant> => {
         const response = await fetch(`api/restaurant`, {
             headers: {

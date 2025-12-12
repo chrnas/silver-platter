@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import RestaurantButton from '../Components/RestaurantButton';
 import type {Restaurant} from '../Types/Restaurant'
 import './css/MyPage.css'
@@ -23,14 +23,19 @@ function MyPage() {
         setSelected([]);
     }
 
+    useEffect(() => {
+        
+    }, [])
+
     useMemo(() => {
+
         let tempRestaurant : Restaurant = {
             Id: 0,
             Name: "Temporary Restaurant",
             Description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
             Address: "tempytemptemptemp"
         }
-        if(!myRestaurants.some(r => r.Id === tempRestaurant.Id)) {
+        if(!myRestaurants.some(r => r.id === tempRestaurant.id)) {
             myRestaurants.push(tempRestaurant);
         }
     }, [])
@@ -41,7 +46,7 @@ function MyPage() {
                 <section className='FavoriteRestaurants'>
                     <h1>My Favorite Restaurants</h1>
                     {myRestaurants.map((restaurant) => (
-                        <RestaurantButton key={restaurant.Id} restaurant={restaurant}/>
+                        <RestaurantButton key={restaurant.id} restaurant={restaurant}/>
                     ))}
                 </section>
 

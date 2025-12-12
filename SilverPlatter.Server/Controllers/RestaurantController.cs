@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SilverPlatter.Server.Models;
 using SilverPlatter.Server.Repositories;
+using System;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -40,6 +41,29 @@ public class RestaurantController : ControllerBase
         } catch
         {
             return BadRequest("Failed to get restaurant by id");
+        }
+    }
+
+    [HttpGet("random")]
+    public IActionResult GetRandom()
+    {
+        try
+        {
+            var restaurants = _repo.GetAll().ToList();
+
+            if (restaurants.Count == 0)
+            {
+                return NotFound("No restaurants available.");
+            }
+
+            var randomIndex = Random.Shared.Next(restaurants.Count);
+            var randomRestaurant = restaurants[randomIndex];
+
+            return Ok(randomRestaurant);
+        }
+        catch
+        {
+            return BadRequest("Failed to get random restaurant.");
         }
     }
 

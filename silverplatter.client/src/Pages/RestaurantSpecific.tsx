@@ -2,7 +2,6 @@ import { useState } from "react";
 import Gallery from "../Components/Gallery";
 import Menu from "../Components/Menu";
 import "./css/RestaurantSpecific.css"
-import { useState } from "react";
 
 function bookTable() {
     // Something
@@ -16,10 +15,10 @@ function RestaurantSpecific() {
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
 
     let tempRestaurant = {
-        Id: 0,
-        Name: "Temporary Restaurant",
-        Description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
-        Address: "Tempstreet 23, Tempköping"
+        id: 0,
+        name: "Temporary Restaurant",
+        description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
+        address: "Tempstreet 23, Tempköping"
     }
 
     return (
@@ -32,13 +31,13 @@ function RestaurantSpecific() {
         >
             <div className="RestaurantFrontSection">
                 <div className="RestaurantHeader">
-                    <h1>{tempRestaurant.Name}</h1>
-                    <h3 id="Address">{tempRestaurant.Address}</h3>
+                    <h1>{tempRestaurant.name}</h1>
+                    <h3 id="Address">{tempRestaurant.address}</h3>
                 </div>
 
                 <section className="Information">
                     <div className="Description">
-                        <h3>{tempRestaurant.Description}</h3>
+                        <h3>{tempRestaurant.description}</h3>
                     </div>
                     <div className="Accolades">
 

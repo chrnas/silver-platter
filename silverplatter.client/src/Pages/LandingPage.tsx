@@ -1,18 +1,23 @@
+import { useEffect, useState } from 'react';
 import PopupRestaurantComp from '../Components/PopupRestaurantComp';
+import { restaurantService } from '../service/RestaurantService';
 import './css/LandingPage.css'
+import type { Restaurant } from '../Types/Restaurant';
 
 function LandingPage() {
-    let tempRestaurant = {
-        id: 0,
-        name: "Temporary Restaurant",
-        description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
-        address: "tempytemptemptemp"
-    }
+
+    const [restaurant, setRestaurant] = useState<Restaurant>();
+
+    useEffect(() => {
+        restaurantService.getRandom().then((data: any) => {
+            setRestaurant(data);
+        }).catch(console.error)
+    }, []);
 
     return (
         <main className="LandingPage">
             <div className="Content">
-                <PopupRestaurantComp restaurant={tempRestaurant}/>
+                {restaurant && <PopupRestaurantComp restaurant={restaurant}/>}
             </div>
 
             <div className="Background">

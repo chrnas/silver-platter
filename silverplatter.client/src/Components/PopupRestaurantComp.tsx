@@ -18,8 +18,8 @@ function PopupRestaurantComp(props : { restaurant : Restaurant}) {
             <div className="PopupRestaurant">
                 <div className='Info'>
                     <div>
-                        <h1 className='PR_Name'>{props.restaurant.Name}</h1>
-                        <p className='PR_Description'>{props.restaurant.Description}</p>
+                        <h1 className='PR_Name'>{props.restaurant.name}</h1>
+                        <p className='PR_Description'>{props.restaurant.description}</p>
                     </div>
                 </div>
                 <img
