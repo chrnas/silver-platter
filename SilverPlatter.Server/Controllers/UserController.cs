@@ -8,9 +8,9 @@ public class UserController : ControllerBase
 {
     private readonly IUserRepository _repo;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository repo)
     {
-        _repo = userRepository;   
+        _repo = repo;
     }
 
     [HttpGet]
@@ -18,27 +18,26 @@ public class UserController : ControllerBase
     {
         try
         {
-            var users = _repo.GetAll();
-            return Ok(users);
-        } catch
+            return Ok(_repo.GetAll());
+        }
+        catch
         {
-            return BadRequest("Failed to get all users");
+            return BadRequest("Failed to get users");
         }
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("id={id}")]
     public IActionResult GetById(int id)
     {
         try
         {
             var user = _repo.GetById(id);
             if (user == null)
-            {
-                return NotFound(); // No item found
-            }
+                return NotFound();
 
             return Ok(user);
-        } catch
+        }
+        catch
         {
             return BadRequest("Failed to get user by id");
         }
@@ -51,44 +50,43 @@ public class UserController : ControllerBase
         {
             var created = _repo.Add(user);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
-        } catch
+        }
+        catch
         {
-            return BadRequest("Failed to add new user to the users list ");
+            return BadRequest("Failed to create user");
         }
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("id={id}")]
     public IActionResult Update(int id, User user)
     {
         if (id != user.Id)
-        {
-            return BadRequest("given id and user id are not the same");
-        }
+            return BadRequest("Id mismatch");
 
         try
         {
-            var updated = _repo.Update(user);
-            return Ok(updated);
-        } catch
+            return Ok(_repo.Update(user));
+        }
+        catch
         {
-            return BadRequest("Bad request for update to the repo");
+            return BadRequest("Failed to update user");
         }
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("id={id}")]
     public IActionResult Delete(int id)
     {
         try
         {
-            bool isRemoved = _repo.RemoveById(id);
-            if (!isRemoved)
-            {
+            bool removed = _repo.RemoveById(id);
+            if (!removed)
                 return NotFound();
-            }
+
             return NoContent();
-        } catch
+        }
+        catch
         {
-            return BadRequest("Failed to remove MenuEntry by id");
+            return BadRequest("Failed to delete user");
         }
     }
 }

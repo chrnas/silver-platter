@@ -1,6 +1,3 @@
-using System.Data.Common;
-using System.Dynamic;
-using System.Reflection.Metadata.Ecma335;
 using MySql.Data.MySqlClient;
 using SilverPlatter.Server.Models;
 
@@ -8,17 +5,17 @@ namespace SilverPlatter.Server.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private string _connectionString;
+        private readonly string _connectionString;
 
         public UserRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection") 
-                ?? throw new InvalidOperationException("Connection string not found"); 
+            _connectionString = configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string not found.");
         }
 
         public List<User> GetAll()
         {
-            List<User> users = new List<User>();
+            List<User> users = new();
 
             using MySqlConnection connection = new MySqlConnection(_connectionString);
             connection.Open();
@@ -26,7 +23,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand command = new MySqlCommand();
             command.Connection = connection;
             command.CommandText = @"
-                SELECT UserId, Name, RestaurantFavorites, Budget, Allergies, PreferedRating 
+                SELECT UserId, Name, Budget, PreferedRating
                 FROM Users;
             ";
 
@@ -37,12 +34,8 @@ namespace SilverPlatter.Server.Repositories
                 {
                     Id = reader.GetInt32("UserId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
-                    RestaurantFavorites = reader.IsDBNull(reader.GetOrdinal("RestaurantFavorites"))
-                        ? new List<int>() : JsonSerializer.Deserialize<List<int>>(reader.GetString("RestaurantFavorites")) ?? new List<int>(),
                     Budget = reader.GetInt32("Budget"),
-                    Allergies = reader.IsDBNull(reader.GetOrdinal("Allergies"))
-                        ? new List<string>() : JsonSerializer.Deserialize<List<string>>(reader.GetString("Allergies")) ?? new List<string>(),
-                    PreferedRating = reader.GetInt32("PreferedRating"),
+                    PreferedRating = reader.GetInt32("PreferedRating")
                 });
             }
 
@@ -56,12 +49,13 @@ namespace SilverPlatter.Server.Repositories
             using MySqlConnection connection = new MySqlConnection(_connectionString);
             connection.Open();
 
-            using MySqlCommand command = new MySqlCommand(@"
-                SELECT UserId, Name, RestaurantFavorites, Budget, Allergies, PreferedRating
-                FROM User
+            using MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandText = @"
+                SELECT UserId, Name, Budget, PreferedRating
+                FROM Users
                 WHERE UserId = @id;
-            ", connection);
-
+            ";
             command.Parameters.AddWithValue("@id", id);
 
             using MySqlDataReader reader = command.ExecuteReader();
@@ -71,15 +65,7 @@ namespace SilverPlatter.Server.Repositories
                 {
                     Id = reader.GetInt32("UserId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
-
-                    RestaurantFavorites = reader.IsDBNull(reader.GetOrdinal("RestaurantFavorites"))
-                        ? new List<int>() : JsonSerializer.Deserialize<List<int>>(reader.GetString("RestaurantFavorites")) ?? new List<int>(),
-
                     Budget = reader.GetInt32("Budget"),
-
-                    Allergies = reader.IsDBNull(reader.GetOrdinal("Allergies"))
-                        ? new List<string>() : JsonSerializer.Deserialize<List<string>>(reader.GetString("Allergies")) ?? new List<string>(),
-
                     PreferedRating = reader.GetInt32("PreferedRating")
                 };
             }
@@ -95,43 +81,31 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand insertCommand = new MySqlCommand();
             insertCommand.Connection = connection;
             insertCommand.CommandText = @"
-                INSERT INTO User (Name, RestaurantFavorites, Budget, Allergies, PreferedRating)
-                VALUES (@name, CAST(@favorites AS JSON), @budget, CAST(@allergies AS JSON), @rating);
+                INSERT INTO Users (Name, Budget, PreferedRating)
+                VALUES (@name, @budget, @rating);
             ";
-
             insertCommand.Parameters.AddWithValue("@name", user.Name);
-            insertCommand.Parameters.AddWithValue("@favorites", JsonSerializer.Serialize(user.RestaurantFavorites ?? new List<int>()));
             insertCommand.Parameters.AddWithValue("@budget", user.Budget);
-            insertCommand.Parameters.AddWithValue("@allergies", JsonSerializer.Serialize(user.Allergies ?? new List<string>()));
             insertCommand.Parameters.AddWithValue("@rating", user.PreferedRating);
 
             insertCommand.ExecuteNonQuery();
 
-            // SELECT the inserted row
             using MySqlCommand selectCommand = new MySqlCommand();
             selectCommand.Connection = connection;
             selectCommand.CommandText = @"
-                SELECT UserId, Name, RestaurantFavorites, Budget, Allergies, PreferedRating
-                FROM User
+                SELECT UserId, Name, Budget, PreferedRating
+                FROM Users
                 WHERE UserId = LAST_INSERT_ID();
             ";
 
-            using MySqlReader reader = selectCommand.ExecuteReader();
+            using MySqlDataReader reader = selectCommand.ExecuteReader();
             if (reader.Read())
             {
                 return new User
                 {
                     Id = reader.GetInt32("UserId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
-
-                    RestaurantFavorites = reader.IsDBNull(reader.GetOrdinal("RestaurantFavorites"))
-                        ? new List<int>() : JsonSerializer.Deserialize<List<int>>(reader.GetString("RestaurantFavorites")) ?? new List<int>(),
-
                     Budget = reader.GetInt32("Budget"),
-
-                    Allergies = reader.IsDBNull(reader.GetOrdinal("Allergies"))
-                        ? new List<string>() : JsonSerializer.Deserialize<List<string>>(reader.GetString("Allergies")) ?? new List<string>(),
-
                     PreferedRating = reader.GetInt32("PreferedRating")
                 };
             }
@@ -149,17 +123,13 @@ namespace SilverPlatter.Server.Repositories
             updateCommand.CommandText = @"
                 UPDATE Users
                 SET Name = @name,
-                    RestaurantFavorites = CAST(@favorites AS JSON),
                     Budget = @budget,
-                    Allergies = CAST(@allergies AS JSON),
                     PreferedRating = @rating
                 WHERE UserId = @id;
             ";
             updateCommand.Parameters.AddWithValue("@id", user.Id);
             updateCommand.Parameters.AddWithValue("@name", user.Name);
-            updateCommand.Parameters.AddWithValue("@favorites", JsonSerializer.Serialize(user.RestaurantFavorites ?? new List<int>()));
             updateCommand.Parameters.AddWithValue("@budget", user.Budget);
-            updateCommand.Parameters.AddWithValue("@allergies", JsonSerializer.Serialize(user.Allergies ?? new List<string>()));
             updateCommand.Parameters.AddWithValue("@rating", user.PreferedRating);
 
             updateCommand.ExecuteNonQuery();
@@ -167,8 +137,8 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand selectCommand = new MySqlCommand();
             selectCommand.Connection = connection;
             selectCommand.CommandText = @"
-                SELECT UserId, Name, RestaurantFavorites, Budget, Allergies, PreferedRating
-                From Users
+                SELECT UserId, Name, Budget, PreferedRating
+                FROM Users
                 WHERE UserId = @id;
             ";
             selectCommand.Parameters.AddWithValue("@id", user.Id);
@@ -180,25 +150,17 @@ namespace SilverPlatter.Server.Repositories
                 {
                     Id = reader.GetInt32("UserId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
-
-                    RestaurantFavorites = reader.IsDBNull(reader.GetOrdinal("RestaurantFavorites"))
-                        ? new List<int>() : JsonSerializer.Deserialize<List<int>>(reader.GetString("RestaurantFavorites")) ?? new List<int>(),
-
                     Budget = reader.GetInt32("Budget"),
-
-                    Allergies = reader.IsDBNull(reader.GetOrdinal("Allergies"))
-                        ? new List<string>() : JsonSerializer.Deserialize<List<string>>(reader.GetString("Allergies")) ?? new List<string>(),
-
-                    PreferedRating = reader.GetInt32("PreferedRating"),
+                    PreferedRating = reader.GetInt32("PreferedRating")
                 };
             }
-            
-            throw new Exception($"User with ID {user.Id} was updated but could nit be retrieved. ");
+
+            throw new Exception($"User with ID {user.Id} was updated but could not be retrieved.");
         }
 
         public bool RemoveById(int id)
         {
-            using MySqlConnection connection = new MySqlConnection();
+            using MySqlConnection connection = new MySqlConnection(_connectionString);
             connection.Open();
 
             using MySqlCommand command = new MySqlCommand();
@@ -208,10 +170,9 @@ namespace SilverPlatter.Server.Repositories
                 WHERE UserId = @id;
             ";
             command.Parameters.AddWithValue("@id", id);
+
             int rowsAffected = command.ExecuteNonQuery();
-
-            return rowsAffected > 0; 
+            return rowsAffected > 0;
         }
-
     }
 }
