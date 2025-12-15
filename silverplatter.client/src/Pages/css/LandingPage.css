@@ -39,3 +39,11 @@
     height: auto;
     object-fit: cover;
 }
+
+
+.Button {
+    outline: 2px white solid;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}

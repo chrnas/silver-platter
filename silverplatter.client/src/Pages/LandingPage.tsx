@@ -1,18 +1,30 @@
+import { useNavigate } from 'react-router-dom';
 import PopupRestaurantComp from '../Components/PopupRestaurantComp';
+import type { Restaurant } from '../Types/Restaurant';
+import { useEffect, useState } from 'react';
+import { restaurantService } from '../service/RestaurantService';
 import './css/LandingPage.css'
 
 function LandingPage() {
-    let tempRestaurant = {
-        id: 0,
-        name: "Temporary Restaurant",
-        description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
-        address: "tempytemptemptemp"
-    }
+    const [randomRestaurant, setRandomRestaurant] = useState<Restaurant>();
+    const [skip, setSkip] = useState<boolean>(false);
+
+    useEffect(() => {
+        restaurantService.getAll().then(data => {
+            console.log("API Response: ", data);
+            let randomId = Math.floor(Math.random() * data.length);
+            setRandomRestaurant(data[randomId])
+        }) 
+    }, [skip])
+
+    let nav = useNavigate();
 
     return (
         <main className="LandingPage">
             <div className="Content">
-                <PopupRestaurantComp restaurant={tempRestaurant}/>
+                <button className='Button' onClick={() => setSkip(!skip)}>Skip</button>
+                <PopupRestaurantComp restaurant={randomRestaurant || {name: "", id: 0, description: "", address: "", budget: 0, rating: 0}}/>
+                <button className='Button' onClick={() => nav("/Restaurants/"+randomRestaurant?.name)}>Go to</button>
             </div>
 
             <div className="Background">

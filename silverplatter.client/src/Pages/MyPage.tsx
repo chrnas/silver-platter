@@ -4,7 +4,7 @@ import type {Restaurant} from '../Types/Restaurant'
 import './css/MyPage.css'
 
 const myRestaurants: Restaurant[] = [];
-const OPTIONS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Halal'];
+const OPTIONS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Lactose-free', 'Halal'];
 
 
 function MyPage() {

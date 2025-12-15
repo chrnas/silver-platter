@@ -32,7 +32,10 @@ function Browse() {
         <div className='Browse'>
             <div className='Search'>
                 <h1>Can't find what you're looking for?</h1>
-                <input type="search" name="RestaurantSearch" id="RestaurantSearch" placeholder={"I need McDonalds?"} />
+                <div style={{display: "flex", flexDirection: "row", gap: "1rem"}}>
+                    <input type="search" name="RestaurantSearch" id="RestaurantSearch" placeholder={"I need McDonalds?"} />
+                    <button type="button">Go</button>
+                </div>
             </div>
             <div className='Categories'>
                 <section id="HighestRated" className='Category'>

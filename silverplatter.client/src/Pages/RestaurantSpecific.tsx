@@ -1,24 +1,51 @@
 import Gallery from "../Components/Gallery";
 import Menu from "../Components/Menu";
+import { restaurantFavoriteService } from "../service/RestaurantFavoriteService";
+import type { Restaurant } from "../Types/Restaurant";
+import type { RestaurantFavorite } from "../Types/RestaurantFavorite";
+import { useEffect, useState } from "react";
 import "./css/RestaurantSpecific.css"
-import { useState } from "react";
 
-function bookTable() {
-    // Something
-}
-
-function RestaurantSpecific() {
+function RestaurantSpecific(props : {restaurant : Restaurant}) {
     const [saved, setSaved] = useState<Boolean>(false);
     const [isRestaurantOwner] = useState(true);
     const [bgColor, setBgColor] = useState("#007bff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
 
-    let tempRestaurant = {
-        Id: 0,
-        Name: "Temporary Restaurant",
-        Description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
-        Address: "Tempstreet 23, Tempköping"
+    /** Check if restaurant is among already favorite restaurants,
+     * if it is toggle the save button to highlight as saved. 
+     */
+    useEffect(() => {
+        restaurantFavoriteService.getByUserId(0).then(favorites => {
+            let restaurantIds = favorites.map(favorite => {
+                return favorite.restaurantId;
+            })
+            if(props.restaurant.id in restaurantIds) {
+                setSaved(true)
+            }
+        })
+    })
+
+    /**
+     * Add restaurant to favorites
+     * @param restaurant: this restaurant
+     */
+    function addToFavorites(restaurant : Restaurant) {
+        let restId = restaurant.id;
+        let userId = 0;
+        restaurantFavoriteService.getAll().then(data => {
+            let favorite : RestaurantFavorite = {id: data.length, userId: userId, restaurantId: restId}
+            restaurantFavoriteService.create(favorite)
+        })
+    }
+
+    /**
+     * Remove restaurant from favorites
+     * @param restaurant: this restaurant
+     */
+    function removeFromFavorites(restaurant : Restaurant) {
+        restaurantFavoriteService.delete(restaurant.id)
     }
 
     return (
@@ -31,13 +58,13 @@ function RestaurantSpecific() {
         >
             <div className="RestaurantFrontSection">
                 <div className="RestaurantHeader">
-                    <h1>{tempRestaurant.Name}</h1>
-                    <h3 id="Address">{tempRestaurant.Address}</h3>
+                    <h1>{props.restaurant.name}</h1>
+                    <h3 id="Address">{props.restaurant.address}</h3>
                 </div>
 
                 <section className="Information">
                     <div className="Description">
-                        <h3>{tempRestaurant.Description}</h3>
+                        <h3>{props.restaurant.description}</h3>
                     </div>
                     <div className="Accolades">
 
@@ -45,10 +72,19 @@ function RestaurantSpecific() {
                 </section>
 
                 <section className="BookTable">
-                    <button id="BookButton" onClick={() => bookTable()}>
+                    <button id="BookButton" onClick={() => console.log("Booked")}>
                         <h2>Book Table</h2>
                     </button>
-                    <button id="SaveButton" onClick={() => setSaved(!saved)} style={saved ? {backgroundColor: "darkred"} : {}}>
+                    <button id="SaveButton" onClick={() => {
+                        if(saved) {
+                            removeFromFavorites(props.restaurant);
+                        } else {
+                            addToFavorites(props.restaurant)
+                        }
+
+                        setSaved(!saved)
+
+                    }} style={saved ? {backgroundColor: "darkred"} : {}}>
                         <h2>{!saved ? "Save to My Page" : "Remove from My Page"}</h2>
                     </button>
                 </section>
