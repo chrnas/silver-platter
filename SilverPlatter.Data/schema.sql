@@ -6,6 +6,8 @@ CREATE TABLE Restaurants (
     RestaurantId INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description TEXT,
+    Rating INT NOT NULL,
+    BUDGET INT NOT NULL,
     Address VARCHAR(255)
 ) ENGINE=InnoDB;
 
@@ -13,6 +15,7 @@ CREATE TABLE MenuEntries (
     MenuEntryId INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description TEXT,
+    Allergy VARCHAR(255),
     RestaurantId INT NOT NULL,
     FOREIGN KEY (RestaurantId) REFERENCES Restaurants(RestaurantId) ON DELETE CASCADE
 ) ENGINE=InnoDB;

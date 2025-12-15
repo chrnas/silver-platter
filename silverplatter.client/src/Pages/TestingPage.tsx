@@ -16,7 +16,6 @@ function TestingPage() {
     }
 
     useEffect(() => {
-        //restaurantService.create(tempRestaurant);}, []);
         restaurantService.getAll().then(data => {
             setEntries(data);
         }).catch(console.error);
