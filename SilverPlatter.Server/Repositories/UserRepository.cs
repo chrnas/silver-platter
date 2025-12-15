@@ -1,6 +1,4 @@
-using System.Data.Common;
-using System.Dynamic;
-using System.Reflection.Metadata.Ecma335;
+using System.Text.Json;
 using MySql.Data.MySqlClient;
 using SilverPlatter.Server.Models;
 
@@ -116,7 +114,7 @@ namespace SilverPlatter.Server.Repositories
                 WHERE UserId = LAST_INSERT_ID();
             ";
 
-            using MySqlReader reader = selectCommand.ExecuteReader();
+            using MySqlDataReader reader = selectCommand.ExecuteReader();
             if (reader.Read())
             {
                 return new User
