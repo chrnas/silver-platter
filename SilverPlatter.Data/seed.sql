@@ -19,3 +19,12 @@ INSERT INTO BookingTables (Name, Description, Places, RestaurantId) VALUES
 ('Table 2', 'Near entrance', 2, 2),
 ('Table 1', 'Central area', 6, 3),
 ('Table 2', 'Quiet corner', 4, 3);
+
+INSERT INTO Users (Name, Budget, PreferedRating) VALUES
+('John Testing',  400, 3);
+
+INSERT INTO RestaurantFavorites (UserId, RestaurantId) VALUES 
+(1, 1);
+
+INSERT INTO Allergies (Name, UserId) VALUES 
+('Gluten', 1);
