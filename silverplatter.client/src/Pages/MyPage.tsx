@@ -30,7 +30,7 @@ function MyPage() {
             Description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
             Address: "tempytemptemptemp"
         }
-        if(!myRestaurants.some(r => r.Id === tempRestaurant.Id)) {
+        if(!myRestaurants.some(r => r.id === tempRestaurant.id)) {
             myRestaurants.push(tempRestaurant);
         }
     }, [])
