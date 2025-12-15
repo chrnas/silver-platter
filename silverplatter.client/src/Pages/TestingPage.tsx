@@ -12,6 +12,8 @@ function TestingPage() {
         id: 7,
         name: "Temporary Restaurant",
         description: "testing testing testing",
+        rating: 1,
+        budget: 1000,
         address: "tempytemptemptemp"
     }
 

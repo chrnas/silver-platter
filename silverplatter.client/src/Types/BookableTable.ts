@@ -1,5 +1,3 @@
-
-
 export interface BookableTable {
     id: number;
     name: string;

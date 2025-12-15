@@ -7,7 +7,7 @@ CREATE TABLE Restaurants (
     Name VARCHAR(255),
     Description TEXT,
     Rating INT NOT NULL,
-    BUDGET INT NOT NULL,
+    Budget INT NOT NULL,
     Address VARCHAR(255)
 ) ENGINE=InnoDB;
 
