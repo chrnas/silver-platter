@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Gallery from "../Components/Gallery";
 import Menu from "../Components/Menu";
 import "./css/RestaurantSpecific.css"

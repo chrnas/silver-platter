@@ -8,7 +8,9 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IMenuEntryRepository, MenuEntryRepository>();
 builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddScoped<IBookingTableRepository, BookingTableRepository>();
-
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<>(IAllergyRepository, AllergyRepository);
+builder.Services.AddScoped<>(IRestaurantFavoriteRepository, RestaurantFavoriteRepository);
 
 builder.Services.AddCors(options =>
 {

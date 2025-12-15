@@ -10,8 +10,8 @@ function Header() {
                 <PageButton name="Home" ref="/" />
                 <PageButton name="Browse" ref="/Browse" />
                 <PageButton name="My Page" ref="/MyPage" />
-                <PageButton name="Testing space" ref="/TestingPage"/>
             </nav>
+            <PageButton name="Testing space" ref="/TestingPage"/>
         </div>
     )
 }
