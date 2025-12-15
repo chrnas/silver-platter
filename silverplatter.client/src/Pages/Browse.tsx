@@ -1,11 +1,21 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Restaurant } from '../Types/Restaurant';
 import RestaurantButton from '../Components/RestaurantButton';
 import './css/Browse.css'
+import { restaurantService } from '../service/RestaurantService';
 
 const restaurantLists : Map<string, Array<Restaurant>> = new Map();
 
 function Browse() {
+
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+
+    useEffect(() => {
+            restaurantService.getAll()
+                .then(data => setRestaurants(data))
+                .catch(console.error);
+        }, []);
+
     useMemo(() => {
         let tempRestaurant : Restaurant = {
             id: 0,
@@ -65,6 +75,18 @@ function Browse() {
                                 <RestaurantButton restaurant={restaurant}/>
                             );
                         })}
+                    </div>
+                </section>
+
+                <section id="Budget" className='Category'>
+                    <h2 className='CategoryName'>All restaurants</h2>
+                    <div className='RList'>
+                         {restaurants.map(restaurant => (
+                            <RestaurantButton
+                                key={restaurant.id}
+                                restaurant={restaurant}
+                            />
+                        ))}
                     </div>
                 </section>
             </div>
