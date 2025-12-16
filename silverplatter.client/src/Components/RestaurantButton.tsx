@@ -4,9 +4,8 @@ import './css/RestaurantButton.css'
 
 function RestaurantButton(props : { restaurant : Restaurant}) {
     let nav = useNavigate();
-    let ref = "Template"
     return (
-        <button onClick={() => nav("/Restaurants/" + ref)} id='SingleRestaurantButton'>
+        <button onClick={() => nav("/Restaurants/"+props.restaurant.name)} id='SingleRestaurantButton'>
             <h2 className='RestaurantName'>{props.restaurant.name}</h2>
         </button>
     )
