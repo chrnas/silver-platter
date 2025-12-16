@@ -21,7 +21,7 @@ namespace SilverPlatter.Server.Repositories
 
             using MySqlCommand command = new MySqlCommand();
             command.Connection = connection;
-            command.CommandText = @"SELECT RestaurantId, Name, Description, Address FROM Restaurants;";
+            command.CommandText = @"SELECT RestaurantId, Name, Description, Rating, Budget, Address FROM Restaurants;";
 
             using MySqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -31,6 +31,8 @@ namespace SilverPlatter.Server.Repositories
                     Id = reader.GetInt32("RestaurantId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null: reader.GetString("Name"),
                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null: reader.GetString("Description"),
+                    Rating = reader.GetInt32("Rating"),
+                    Budget = reader.GetInt32("Budget"),
                     Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null: reader.GetString("Address")
                 });
             }
@@ -47,7 +49,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand command = new MySqlCommand();
             command.Connection = connection;
             command.CommandText = @"
-                SELECT RestaurantId, Name, Description, Address FROM Restaurants 
+                SELECT RestaurantId, Name, Description, Rating, Budget, Address FROM Restaurants 
                 WHERE RestaurantId = @id;
             ";
             command.Parameters.AddWithValue("@id", id);
@@ -60,6 +62,8 @@ namespace SilverPlatter.Server.Repositories
                     Id = reader.GetInt32("RestaurantId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                    Rating = reader.GetInt32("Rating"),
+                    Budget = reader.GetInt32("Budget"),
                     Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString("Address")
                 };
             }
@@ -76,11 +80,13 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand insertCommand = new MySqlCommand();
             insertCommand.Connection = connection;
             insertCommand.CommandText = @"
-                INSERT INTO Restaurants (Name, Description, Address)
-                VALUES (@name, @description, @address);
+                INSERT INTO Restaurants (Name, Description, Rating, Budget, Address)
+                VALUES (@name, @description, @rating, @budget, @address);
             ";
             insertCommand.Parameters.AddWithValue("@name", restaurant.Name);
             insertCommand.Parameters.AddWithValue("@description", restaurant.Description);
+            insertCommand.Parameters.AddWithValue("@rating", restaurant.Rating);
+            insertCommand.Parameters.AddWithValue("@budget", restaurant.Budget);
             insertCommand.Parameters.AddWithValue("@address", restaurant.Address);
 
             insertCommand.ExecuteNonQuery();
@@ -89,7 +95,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand selectCommand = new MySqlCommand();
             selectCommand.Connection = connection;
             selectCommand.CommandText = @"
-                SELECT RestaurantId, Name, Description, Address
+                SELECT RestaurantId, Name, Description, Rating, Budget, Address
                 FROM Restaurants
                 WHERE RestaurantId = LAST_INSERT_ID();
             ";
@@ -101,6 +107,8 @@ namespace SilverPlatter.Server.Repositories
                     Id = reader.GetInt32("RestaurantId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                    Rating = reader.GetInt32("Rating"),
+                    Budget = reader.GetInt32("Budget"),
                     Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString("Address")
                 };
             }
@@ -120,12 +128,16 @@ namespace SilverPlatter.Server.Repositories
                 UPDATE Restaurants
                 SET Name = @name,
                     Description = @description,
+                    Rating = @rating,
+                    Budget = @budget,
                     Address = @address
                 WHERE RestaurantId = @id;
             ";
             updateCommand.Parameters.AddWithValue("@id", restaurant.Id);
             updateCommand.Parameters.AddWithValue("@name", restaurant.Name);
             updateCommand.Parameters.AddWithValue("@description", restaurant.Description);
+            updateCommand.Parameters.AddWithValue("@rating", restaurant.Rating);
+            updateCommand.Parameters.AddWithValue("@budget", restaurant.Budget);
             updateCommand.Parameters.AddWithValue("@address", restaurant.Address);
 
             updateCommand.ExecuteNonQuery();
@@ -134,7 +146,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand selectCommand = new MySqlCommand();
             selectCommand.Connection = connection;
             selectCommand.CommandText = @"
-                SELECT RestaurantId, Name, Description, Address
+                SELECT RestaurantId, Name, Description, Rating, Budget, Address
                 FROM Restaurants
                 WHERE RestaurantId = @id;
             ";
@@ -148,6 +160,8 @@ namespace SilverPlatter.Server.Repositories
                     Id = reader.GetInt32("RestaurantId"),
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                    Rating = reader.GetInt32("Rating"),
+                    Budget = reader.GetInt32("Budget"),
                     Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString("Address")
                 };
             }
