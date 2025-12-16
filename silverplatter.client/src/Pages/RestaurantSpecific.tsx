@@ -17,27 +17,34 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
      * if it is toggle the save button to highlight as saved. 
      */
     useEffect(() => {
-        restaurantFavoriteService.getByUserId(0).then(favorites => {
-            let restaurantIds = favorites.map(favorite => {
-                return favorite.restaurantId;
+        if (!props.restaurant) return;
+
+        restaurantFavoriteService.getByUserId(1)
+            .then(favorites => {
+                const restaurantIds = favorites.map(f => f.restaurantId);
+
+                console.log("List of ids:", restaurantIds);
+                console.log("Props id:", props.restaurant.id);
+
+                setSaved(restaurantIds.includes(props.restaurant.id));
             })
-            if(props.restaurant.id in restaurantIds) {
-                setSaved(true)
-            }
-        })
-    })
+            .catch(err => console.error("Failed to load favorites", err));
+    }, [props.restaurant.id]);
+
 
     /**
      * Add restaurant to favorites
      * @param restaurant: this restaurant
      */
-    function addToFavorites(restaurant : Restaurant) {
-        let restId = restaurant.id;
-        let userId = 0;
-        restaurantFavoriteService.getAll().then(data => {
-            let favorite : RestaurantFavorite = {id: data.length, userId: userId, restaurantId: restId}
-            restaurantFavoriteService.create(favorite)
-        })
+    function addToFavorites(restaurant: Restaurant) {
+        const favorite: Omit<RestaurantFavorite, "id"> = {
+            userId: 1, 
+            restaurantId: restaurant.id
+        };
+
+        restaurantFavoriteService.create(favorite)
+            .then(() => setSaved(true))
+            .catch(err => console.error(err));
     }
 
     /**
@@ -45,7 +52,7 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
      * @param restaurant: this restaurant
      */
     function removeFromFavorites(restaurant : Restaurant) {
-        restaurantFavoriteService.delete(restaurant.id)
+        restaurantFavoriteService.deleteByUserAndRestaurant(1, restaurant.id).then(() => setSaved(false));
     }
 
     return (

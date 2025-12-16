@@ -2,7 +2,7 @@ import type { RestaurantFavorite } from "../Types/RestaurantFavorite";
 
 export const restaurantFavoriteService = {
     getAll: async (): Promise<RestaurantFavorite[]> => {
-        const response = await fetch(`api/restaurantfavorite`, {
+        const response = await fetch(`/api/restaurantfavorite`, {
             headers: { "Content-Type": "application/json" }
         });
 
@@ -14,7 +14,7 @@ export const restaurantFavoriteService = {
     },
 
     getById: async (id: number): Promise<RestaurantFavorite> => {
-        const response = await fetch(`api/restaurantfavorite/id=${id}`, {
+        const response = await fetch(`/api/restaurantfavorite/id=${id}`, {
             headers: { "Content-Type": "application/json" }
         });
 
@@ -26,7 +26,7 @@ export const restaurantFavoriteService = {
     },
 
     getByUserId: async (userId: number): Promise<RestaurantFavorite[]> => {
-        const response = await fetch(`api/restaurantfavorite/user/${userId}`, {
+        const response = await fetch(`/api/restaurantfavorite/user/${userId}`, {
             headers: { "Content-Type": "application/json" }
         });
 
@@ -38,7 +38,7 @@ export const restaurantFavoriteService = {
     },
 
     create: async (favorite: Omit<RestaurantFavorite, "id">): Promise<RestaurantFavorite> => {
-        const response = await fetch(`api/restaurantfavorite`, {
+        const response = await fetch(`/api/restaurantfavorite`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(favorite)
@@ -52,7 +52,7 @@ export const restaurantFavoriteService = {
     },
 
     update: async (favorite: RestaurantFavorite): Promise<RestaurantFavorite> => {
-        const response = await fetch(`api/restaurantfavorite/id=${favorite.id}`, {
+        const response = await fetch(`/api/restaurantfavorite/id=${favorite.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(favorite)

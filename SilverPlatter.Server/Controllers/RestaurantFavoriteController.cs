@@ -68,9 +68,9 @@ public class RestaurantFavoriteController : ControllerBase
             var created = _repo.Add(favorite);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest("Failed to add restaurant favorite");
+            return BadRequest(ex.Message); 
         }
     }
 
