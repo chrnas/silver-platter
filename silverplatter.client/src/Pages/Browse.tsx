@@ -65,12 +65,7 @@ function Browse() {
                     <div className='RList'>
                         {filteredRestaurants?.sort((a, b) => b.rating - a.rating).map(restaurant => {
                             return (
-                                <div className={"restaurant-row"}>
                                     <RestaurantButton restaurant={restaurant}/>
-                                    <div className={"badge"}>
-                                        {restaurant.rating}
-                                    </div>
-                                </div>
                             );
                         })}
                     </div>
@@ -81,12 +76,7 @@ function Browse() {
                     <div className='RList'>
                         {filteredRestaurants?.sort((a, b) => b.budget - a.budget).map(restaurant => {
                             return (
-                                <div className={"restaurant-row"}>
                                     <RestaurantButton restaurant={restaurant}/>
-                                    <div className={"badge"}>
-                                        {restaurant.budget}
-                                    </div>
-                                </div>
                             );
                         })}
                     </div>
