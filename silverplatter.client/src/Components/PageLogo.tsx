@@ -1,6 +1,4 @@
 
-import React from 'react';
-
 function PageLogo() {
     return (
         <div style={{
@@ -13,7 +11,7 @@ function PageLogo() {
             textAlign: "center",
             alignItems: "center"
         }}>
-            <img src="src/assets/react.svg" alt="" style={{
+            <img src="src/assets/silverplatter_logo.png" alt="" style={{
                 width: "20%"
             }}/>
             <h1 style={{marginLeft: "5%"}}>SilverPlatter</h1>
