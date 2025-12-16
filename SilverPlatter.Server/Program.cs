@@ -1,3 +1,4 @@
+using System.Collections.Special
 using SilverPlatter.Server.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,7 @@ app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    
     app.UseSwagger();
     app.UseSwaggerUI();
 }
