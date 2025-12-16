@@ -84,7 +84,7 @@ function Browse() {
                                 <div className={"restaurant-row"}>
                                     <RestaurantButton restaurant={restaurant}/>
                                     <div className={"badge"}>
-                                        {restaurant.rating}
+                                        {restaurant.budget}
                                     </div>
                                 </div>
                             );
