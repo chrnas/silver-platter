@@ -67,11 +67,11 @@ export default defineConfig({
                 target,
                 secure: false
             },
-            '^/api/Allergy' : {
+            '^/api/allergy' : {
                 target,
                 secure: false
             },
-            '^/api/RestaurantFavorite' : {
+            '^/api/restaurantfavorite' : {
                 target, 
                 secure: false
             }

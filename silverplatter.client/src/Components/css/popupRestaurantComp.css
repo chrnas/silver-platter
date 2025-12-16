@@ -4,8 +4,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 5%;
-    width: 70vw;
+    width: 40vw;
 }
 
 .PopupRestaurant {
@@ -34,12 +33,6 @@
 
 .Info:hover {
     background-color: rgba(87, 78, 50, 0.423);
-}
-.Button {
-    outline: 2px white solid;
-    width: 10rem;
-    height: 10rem;
-    border-radius: 50%;
 }
 
 .PopupRestaurant img {
