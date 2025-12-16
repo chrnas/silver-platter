@@ -7,6 +7,14 @@ function RestaurantButton(props : { restaurant : Restaurant}) {
     return (
         <button onClick={() => nav("/Restaurants/" + props.restaurant.name)} id='SingleRestaurantButton'>
             <h2 className='RestaurantName'>{props.restaurant.name}</h2>
+            <div className={"restaurant-row"}>
+                <div className={"badge"}>
+                    rating: {props.restaurant.rating}
+                </div>
+                <div className={"badge"}>
+                    budget: {props.restaurant.budget}
+                </div>
+            </div>
         </button>
     )
 }
