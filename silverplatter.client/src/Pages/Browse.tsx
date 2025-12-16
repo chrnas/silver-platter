@@ -1,33 +1,21 @@
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import type { Restaurant } from '../Types/Restaurant';
 import RestaurantButton from '../Components/RestaurantButton';
 import './css/Browse.css'
-
-const restaurantLists : Map<string, Array<Restaurant>> = new Map();
+import { restaurantService } from '../service/RestaurantService';
 
 function Browse() {
-    useMemo(() => {
-        let tempRestaurant : Restaurant = {
-            id: 0,
-            name: "Temporary Restaurant",
-            description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
-            address: "tempytemptemptemp"
-        }
-        if(!restaurantLists.has("Rating")) {
-            restaurantLists.set("Rating", []);
-            restaurantLists.set("Budget", []);
-            restaurantLists.set("Diet", []);
-        }
-        if(restaurantLists.get("Rating")?.length == 0) {
-            restaurantLists.get("Rating")?.push(tempRestaurant);
-            restaurantLists.get("Rating")?.push(tempRestaurant);
-            restaurantLists.get("Rating")?.push(tempRestaurant);
-            restaurantLists.get("Rating")?.push(tempRestaurant);
-            restaurantLists.get("Rating")?.push(tempRestaurant);
-            restaurantLists.get("Rating")?.push(tempRestaurant);
 
-        }
-    }, [])
+    const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+
+    useEffect(() => {
+        restaurantService.getAll().then(data => {
+            setRestaurants(data);
+            console.log(restaurants);
+            console.log(data?.sort((a, b) => a.rating - b.rating));
+        });
+    }, []);
+
     return (
         <div className='Browse'>
             <div className='Search'>
@@ -41,7 +29,7 @@ function Browse() {
                 <section id="HighestRated" className='Category'>
                     <h2 className='CategoryName'>Highest Rated Restaurants in Linköping</h2>
                     <div className='RList'>
-                        {restaurantLists.get("Rating")?.map(restaurant => {
+                        {restaurants?.sort((a, b) => a.rating - b.rating).map(restaurant => {
                             return (
                                 <RestaurantButton restaurant={restaurant}/>
                             );
@@ -52,7 +40,7 @@ function Browse() {
                 <section id="Budget" className='Category'>
                     <h2 className='CategoryName'>Most Budget Friendly</h2>
                     <div className='RList'>
-                        {restaurantLists.get("Rating")?.map(restaurant => {
+                        {restaurants?.sort((a, b) => b.budget - a.budget).map(restaurant => {
                             return (
                                 <RestaurantButton restaurant={restaurant}/>
                             );
@@ -63,7 +51,7 @@ function Browse() {
                 <section id="Diet" className='Category'>
                     <h2 className='CategoryName'>Allergy Friendly Restaurants</h2>
                     <div className='RList'>
-                        {restaurantLists.get("Rating")?.map(restaurant => {
+                        {restaurants?.map(restaurant => {
                             return (
                                 <RestaurantButton restaurant={restaurant}/>
                             );
