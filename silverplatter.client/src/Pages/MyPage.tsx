@@ -1,48 +1,122 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import RestaurantButton from '../Components/RestaurantButton';
 import type {Restaurant} from '../Types/Restaurant'
 import './css/MyPage.css'
+import { restaurantFavoriteService } from '../service/RestaurantFavoriteService';
+import { restaurantService } from '../service/RestaurantService';
+import { userService } from '../service/UserService';
+import { allergyService } from '../service/AllergyService';
+import type { User } from '../Types/User';
 
-const myRestaurants: Restaurant[] = [];
-const OPTIONS = ['Vegetarian', 'Vegan', 'Gluten-free', 'Lactose-free', 'Halal'];
-
+const OPTIONS = ['Vegetarian', 'Vegan', 'Gluten', 'Lactose', 'Halal'];
 
 function MyPage() {
 
     const [sliderA, setSliderA] = useState<number>(200);
     const [sliderB, setSliderB] = useState<number>(3);
     const [selected, setSelected] = useState<string[]>([]);
+    const [favoriteIds, setFavoriteIds] = useState<number[]>([])
+    const [myRestaurants, setMyRestaurants] = useState<Restaurant[]>([])
+    const [user, setUser] = useState<User>();
+
+    useEffect(() => {
+        restaurantFavoriteService.getByUserId(1).then(data => {
+            setFavoriteIds(data.map(favs => favs.restaurantId))
+        })
+
+        userService.getById(1).then(userSetting => {
+            setSliderA(userSetting.budget);
+            setSliderB(userSetting.preferedRating);
+            setUser(userSetting);
+        })
+
+        allergyService.getByUserId(1).then(allergies => {
+            setSelected(allergies.map(allergy => allergy.name))
+        })
+    }, [])
+
+    useEffect(() => {
+        let mounted = true;
+        (async () => {
+            try {
+                const promises = favoriteIds.map(id => restaurantService.getById(id));
+                const settled = await Promise.allSettled(promises);
+                const restaurants: Restaurant[] = settled
+                    .filter(r => r.status === 'fulfilled')
+                    .map(r => (r as PromiseFulfilledResult<Restaurant>).value);
+                if (mounted) setMyRestaurants(restaurants);
+            } catch (err) {
+                console.error("Failed to load restaurants", err);
+                if (mounted) setMyRestaurants([]);
+            }
+        })();
+    }, [favoriteIds])
 
     function toggleOption(opt: string) {
         setSelected(prev => prev.includes(opt) ? prev.filter(p => p !== opt) : [...prev, opt]);
     }
 
     function reset() {
-        setSliderA(200);
-        setSliderB(3);
-        setSelected([]);
+        userService.getById(1).then(userSetting => {
+            setSliderA(userSetting.budget);
+            setSliderB(userSetting.preferedRating);
+        })
+
+        allergyService.getByUserId(1).then(allergies => {
+            setSelected(allergies.map(allergy => allergy.name))
+        })
     }
 
-    useMemo(() => {
-        let tempRestaurant : Restaurant = {
-            Id: 0,
-            Name: "Temporary Restaurant",
-            Description: "Discover the best temp in temp, all at the small price of 12.99 Temp, you couldn't dream of a better dream than that!",
-            Address: "tempytemptemptemp"
+    async function save() {
+        console.log(user);
+        
+        try {
+            // Update user preferances 
+            if (user) {
+            const updatedUser = {
+                ...user,
+                budget: sliderA,
+                preferedRating: sliderB
+            };
+            await userService.update(updatedUser);
+
+            // Retreive current allergies 
+            const currentAllergies = await allergyService.getByUserId(1);
+
+            // delete previous allergies
+            await Promise.all(
+                currentAllergies.map(a => allergyService.delete(a.id))
+            );
+
+            // Create new allergies
+            await Promise.all(
+                selected.map(name =>
+                    allergyService.create({
+                        name,
+                        userId: 1
+                    })
+                )
+            );
+
+            console.log("Allergies saved successfully");
         }
-        if(!myRestaurants.some(r => r.id === tempRestaurant.id)) {
-            myRestaurants.push(tempRestaurant);
-        }
-    }, [])
+        } catch (err) {
+            console.error("Failed to save preferences", err);
+        } 
+    }
+
 
     return (
         <div style={{height: "calc(100vh - 5rem)"}}>
             <div id="MyPageBody">
                 <section className='FavoriteRestaurants'>
                     <h1>My Favorite Restaurants</h1>
-                    {myRestaurants.map((restaurant) => (
-                        <RestaurantButton key={restaurant.Id} restaurant={restaurant}/>
-                    ))}
+                    {myRestaurants.length > 0 ? myRestaurants.map(restaurant => {
+                        console.log("Restaurant", restaurant.name); 
+                        return (
+                            <RestaurantButton key={restaurant.id} restaurant={restaurant}/>
+                        )
+                    }) : <h3>You have no restaurants saved as favorite</h3>}
                 </section>
 
                 <section className='Profile'>
@@ -110,6 +184,9 @@ function MyPage() {
                         </nav>
                         <button className='ss-reset' onClick={() => reset()}>
                             Reset Preferences
+                        </button>
+                        <button className='ss-save' onClick={() => save()}>
+                            Save Preferences
                         </button>
                     </div>
                 </section>

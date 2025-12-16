@@ -2,7 +2,7 @@ import type { User } from "../Types/User";
 
 export const userService = {
     getAll: async (): Promise<User[]> => {
-        const response = await fetch(`api/user`, {
+        const response = await fetch(`/api/user`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -17,7 +17,7 @@ export const userService = {
     },
 
     getById: async (id: number): Promise<User> => {
-        const response = await fetch(`api/user/id=${id}`, {
+        const response = await fetch(`/api/user/id=${id}`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -32,7 +32,7 @@ export const userService = {
     },
 
     create: async (entry : Omit<User, "id">): Promise<User> => {
-        const response = await fetch(`api/user`, {
+        const response = await fetch(`/api/user`, {
             headers: {
                 "Content-Type": "application/json"
             }, 
@@ -50,7 +50,7 @@ export const userService = {
     },
     
     update: async (entry: User): Promise<User> => {
-        const response = await fetch(`api/user/id=${entry.id}`, {
+        const response = await fetch(`/api/user/id=${entry.id}`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -69,7 +69,7 @@ export const userService = {
         
 
     delete: async (id: number): Promise<void> => {
-        const response = await fetch(`api/user/id=${id}`, {
+        const response = await fetch(`/api/user/id=${id}`, {
             headers: {
                 "Content-Type": "application/json"
             },

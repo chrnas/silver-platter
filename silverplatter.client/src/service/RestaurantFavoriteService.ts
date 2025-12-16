@@ -66,7 +66,7 @@ export const restaurantFavoriteService = {
     },
 
     delete: async (id: number): Promise<void> => {
-        const response = await fetch(`api/restaurantfavorite/id=${id}`, {
+        const response = await fetch(`/api/restaurantfavorite/id=${id}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" }
         });
@@ -77,7 +77,7 @@ export const restaurantFavoriteService = {
     },
 
     deleteByUserAndRestaurant: async (userId: number, restaurantId: number): Promise<void> => {
-        const response = await fetch(`api/restaurantfavorite/${userId}/${restaurantId}`, {
+        const response = await fetch(`/api/restaurantfavorite/${userId}/${restaurantId}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" }
         });
