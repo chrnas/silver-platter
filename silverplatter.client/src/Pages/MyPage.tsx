@@ -67,22 +67,42 @@ function MyPage() {
         })
     }
 
-    function save() {
+    async function save() {
         console.log(user);
-        if(user) {
-            user.budget = sliderA;
-            user.preferedRating = sliderB;
-            userService.update(user) 
+        
+        try {
+            // Update user preferances 
+            if (user) {
+            const updatedUser = {
+                ...user,
+                budget: sliderA,
+                preferedRating: sliderB
+            };
+            await userService.update(updatedUser);
+
+            // Retreive current allergies 
+            const currentAllergies = await allergyService.getByUserId(1);
+
+            // delete previous allergies
+            await Promise.all(
+                currentAllergies.map(a => allergyService.delete(a.id))
+            );
+
+            // Create new allergies
+            await Promise.all(
+                selected.map(name =>
+                    allergyService.create({
+                        name,
+                        userId: 1
+                    })
+                )
+            );
+
+            console.log("Allergies saved successfully");
         }
-        allergyService.getByUserId(1).then(allergies => {
-            allergies.forEach(allergy => allergyService.delete(allergy.id));
-            selected ? selected.forEach(allergy => {
-            console.log(allergy)
-            allergyService.create({
-                name: allergy,
-                userId: 1
-            });
-        }) : console.log("No Allergies")})  
+        } catch (err) {
+            console.error("Failed to save preferences", err);
+        } 
     }
 
 
@@ -176,3 +196,40 @@ function MyPage() {
 }
 
 export default MyPage;
+/*
+async function save() {
+    try {
+        // Update user preferences
+        if (user) {
+            const updatedUser = {
+                ...user,
+                budget: sliderA,
+                preferedRating: sliderB
+            };
+            await userService.update(updatedUser);
+        }
+
+        // Fetch existing allergies
+        const existingAllergies = await allergyService.getByUserId(1);
+
+        // Delete existing allergies
+        await Promise.all(
+            existingAllergies.map(a => allergyService.delete(a.id))
+        );
+
+        // Create new allergies
+        await Promise.all(
+            selected.map(name =>
+                allergyService.create({
+                    name,
+                    userId: 1
+                })
+            )
+        );
+
+        console.log("Allergies saved successfully");
+    } catch (err) {
+        console.error("Failed to save preferences", err);
+    }
+}
+*/

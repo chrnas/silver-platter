@@ -14,7 +14,7 @@ export const allergyService = {
     },
 
     getById: async (id: number): Promise<Allergy> => {
-        const response = await fetch(`/api/allergy/id=${id}`, {
+        const response = await fetch(`/api/allergy/${id}`, {
             headers: { "Content-Type": "application/json" }
         });
 
@@ -52,7 +52,7 @@ export const allergyService = {
     },
 
     update: async (allergy: Allergy): Promise<Allergy> => {
-        const response = await fetch(`/api/allergy/id=${allergy.id}`, {
+        const response = await fetch(`/api/allergy/${allergy.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(allergy)
@@ -66,7 +66,7 @@ export const allergyService = {
     },
 
     delete: async (id: number): Promise<void> => {
-        const response = await fetch(`/api/allergy/id=${id}`, {
+        const response = await fetch(`/api/allergy/${id}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json" }
         });
