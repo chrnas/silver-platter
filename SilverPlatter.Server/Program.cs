@@ -1,4 +1,3 @@
-using System.Collections.Special
 using SilverPlatter.Server.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
