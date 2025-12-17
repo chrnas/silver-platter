@@ -22,6 +22,10 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
     useEffect(() => {
         if (!props.restaurant) return;
 
+        bookingTableService.getByRestaurantId(props.restaurant.id).then(tables => {
+            setBookableTables(tables);
+        });
+
         restaurantFavoriteService.getByUserId(1)
             .then(favorites => {
                 const restaurantIds = favorites.map(f => f.restaurantId);
@@ -32,11 +36,6 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 setSaved(restaurantIds.includes(props.restaurant.id));
             })
             .catch(err => console.error("Failed to load favorites", err));
-
-        bookingTableService.getByRestaurantId(1).then(tables => {
-            setBookableTables(tables);
-            console.log("Loaded tables:", tables);
-        });
 
     }, [props.restaurant.id]);
 
@@ -62,6 +61,22 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
      */
     function removeFromFavorites(restaurant : Restaurant) {
         restaurantFavoriteService.deleteByUserAndRestaurant(1, restaurant.id).then(() => setSaved(false));
+    }
+
+    function bookTable(table: BookableTable) {
+        table.booked = true;
+        bookingTableService.update(table).then(table => {
+            const filteredTables = bookableTables.filter(t => t.id !== table.id);
+            setBookableTables([...filteredTables, table].sort((a,b) => a.id - b.id))
+        });
+    }
+
+    function unBookTable(table: BookableTable) {
+        table.booked = false;
+        bookingTableService.update(table).then(table => {
+            const filteredTables = bookableTables.filter(t => t.id !== table.id);
+            setBookableTables([...filteredTables, table].sort((a,b) => a.id - b.id))
+        });
     }
 
     return (
@@ -155,9 +170,18 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
 
             <section>
                 {bookableTables.map((table) => (
-                    <div key={table.id} className="TableCard">
-                        <h3>Table for {table.name} people</h3>
-                        <button onClick={() => console.log(`Booked table ${table.id}`)}>Book Now</button>
+                    <div key={table.id}>
+                    <h3>Book table tonight, {table.name} in {table.description} for {table.places} people</h3>
+                    {!table.booked && (
+                        <button onClick={() => bookTable(table)}>
+                        Book now
+                        </button>
+                    )}
+                    {table.booked && (
+                        <button onClick={() => unBookTable(table)}>
+                        Unbook
+                        </button>
+                    )}
                     </div>
                 ))}
             </section>

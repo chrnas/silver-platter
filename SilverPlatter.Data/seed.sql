@@ -27,13 +27,13 @@ INSERT INTO MenuEntries (Name, Description, Allergy, RestaurantId) VALUES
 ('Steak Tartare', 'Handcarved Ox, dijonmustard and eggs', '', 6);
 
 
-INSERT INTO BookingTables (Name, Description, Places, RestaurantId) VALUES
-('Table 1', 'Near window with a view', 4, 1),
-('Table 2', 'Cozy corner', 2, 1),
-('Table 1', 'Sea view', 4, 2),
-('Table 2', 'Near entrance', 2, 2),
-('Table 1', 'Central area', 6, 3),
-('Table 2', 'Quiet corner', 4, 3);
+INSERT INTO BookingTables (Name, Description, Places, Booked, RestaurantId) VALUES
+('Table 1', 'Near window with a view', 4, 0, 1),
+('Table 2', 'Cozy corner', 2, 0, 1),
+('Table 1', 'Sea view', 4, 0, 2),
+('Table 2', 'Near entrance', 2, 0, 2),
+('Table 1', 'Central area', 6, 0, 3),
+('Table 2', 'Quiet corner', 4, 0, 3);
 
 INSERT INTO Users (Name, Budget, PreferedRating) VALUES
 ('John Testing',  400, 3);

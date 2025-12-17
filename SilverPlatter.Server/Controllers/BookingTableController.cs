@@ -49,16 +49,12 @@ public class BookingTableController : ControllerBase
     {
         try
         {
-            var bookingTable = _repo.GetByRestaurantId(id);
-            if (bookingTable == null)
-            {
-                return NotFound(); // No item found
-            }
-            return Ok(bookingTable);
+            var tables = _repo.GetByRestaurantId(id);
+            return Ok(tables);
         }
         catch
         {
-            return BadRequest("Failed to get booking table by id");
+            return BadRequest("Failed to get all tables by restaurantId");
         }
     }
 

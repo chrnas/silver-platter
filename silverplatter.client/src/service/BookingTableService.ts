@@ -2,7 +2,7 @@ import type { BookableTable } from "../Types/BookableTable";
 
 export const bookingTableService = {
     getAll: async (): Promise<BookableTable[]> => {
-        const response = await fetch(`api/bookingtable`, {
+        const response = await fetch(`/api/bookingtable`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -17,7 +17,7 @@ export const bookingTableService = {
     },
 
     getById: async (id: number): Promise<BookableTable> => {
-        const response = await fetch(`api/bookingtable/${id}`, {
+        const response = await fetch(`/api/bookingtable/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -32,7 +32,7 @@ export const bookingTableService = {
     },
 
      getByRestaurantId: async (id: number): Promise<BookableTable[]> => {
-        const response = await fetch(`api/bookingtable/restaurant/${id}`, {
+        const response = await fetch(`/api/bookingtable/restaurant/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -47,7 +47,7 @@ export const bookingTableService = {
     },
 
     create: async (entry : Omit<BookableTable, "id">): Promise<BookableTable> => {
-        const response = await fetch(`api/bookingtable`, {
+        const response = await fetch(`/api/bookingtable`, {
             headers: {
                 "Content-Type": "application/json"
             }, 
@@ -65,7 +65,7 @@ export const bookingTableService = {
     },
     
     update: async (entry: BookableTable): Promise<BookableTable> => {
-        const response = await fetch(`api/bookingtable/${entry.id}`, {
+        const response = await fetch(`/api/bookingtable/${entry.id}`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -84,7 +84,7 @@ export const bookingTableService = {
         
 
     delete: async (id: number): Promise<void> => {
-        const response = await fetch(`api/bookingtable/${id}`, {
+        const response = await fetch(`/api/bookingtable/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             },
