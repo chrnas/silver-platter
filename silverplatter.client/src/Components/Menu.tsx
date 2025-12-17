@@ -1,15 +1,15 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import "./css/Menu.css";
+import type { MenuItem } from "../Types/MenuItem";
+import { menuEntryService } from "../service/MenuEntryService";
 
-type MenuItem = { id: number; name: string; description?: string; price: string; tag?: string };
-type MenuCategory = { id: string; title: string; items: MenuItem[] };
-
+/*
 const sampleMenu: MenuCategory[] = [
   {
     id: "starters",
     title: "Starters",
     items: [
-      { id: 1, name: "Charred Octopus", description: "Smoky paprika • Lemon aioli", price: "$12" },
+      { id: 1, name: "Charred Octopus", description: "Smoky paprika • Lemon aioli", allergy: "Gluten"},
       { id: 2, name: "Heirloom Tomato", description: "Burrata • Basil • Aged balsamic", price: "$10" },
     ],
   },
@@ -29,9 +29,31 @@ const sampleMenu: MenuCategory[] = [
       { id: 22, name: "Lemon Tart", description: "Citrus curd • Almond crust", price: "$9" },
     ],
   },
-];
+];*/
 
-const Menu: React.FC = () => {
+
+type MenuProps = {
+  restaurantId: number;
+};
+
+const Menu: React.FC<MenuProps> = ({restaurantId}) => {
+  const [items, setItems] = useState<MenuItem[]>([]);
+  const [randomItem, setRandomItem] = useState<MenuItem>();
+
+  useEffect(() => {
+    if (!restaurantId) return;
+    
+    menuEntryService.getByRestaurantId(restaurantId)
+      .then((data) => {
+        let randomId = Math.floor(Math.random() * data.length);
+        setRandomItem(data[randomId]);
+        setItems(data);
+      })
+
+  }, [restaurantId]);
+
+
+
   return (
     <div className="menu-root">
 
@@ -39,42 +61,30 @@ const Menu: React.FC = () => {
         <h1 id="menu-title" className="menu-page-title">Our Menu</h1>
 
         <div className="menu-grid">
-          <aside className="menu-categories" aria-label="Menu categories">
-            <ul>
-              {sampleMenu.map((c) => (
-                <li key={c.id}>
-                  <a href={`#${c.id}`} className="cat-link">{c.title}</a>
+          
+
+          <section className="menu-list">
+            <ul className="items">
+              {items.map((it) => (
+                <li key={it.id} className="menu-item">
+                  <div className="item-main">
+                    <div className="item-title">
+                      <span className="name">{it.name}</span>
+                    </div>
+                  </div>
+                  {it.description && <p className="item-desc">{it.description}</p>}
                 </li>
               ))}
             </ul>
-          </aside>
-
-          <section className="menu-list">
-            {sampleMenu.map((category) => (
-              <div key={category.id} id={category.id} className="menu-category">
-                <h2 className="category-title">{category.title}</h2>
-                <ul className="items">
-                  {category.items.map((it) => (
-                    <li key={it.id} className="menu-item">
-                      <div className="item-main">
-                        <div className="item-title">
-                          <span className="name">{it.name}</span>
-                          {it.tag && <span className="tag">{it.tag}</span>}
-                        </div>
-                        <div className="price">{it.price}</div>
-                      </div>
-                      {it.description && <p className="item-desc">{it.description}</p>}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+              
+            
           </section>
 
           <aside className="menu-side" aria-label="Featured and actions">
             <div className="featured">
               <h3>Tonight's Feature</h3>
-              <p className="featured-dish">Seared scallops • Brown butter • Crispy prosciutto</p>
+              <p className="featured-dish">{randomItem?.name}</p>
+              <p>{randomItem?.description}</p>
             </div>
 
             <div className="reserve-card">
