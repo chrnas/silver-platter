@@ -11,7 +11,6 @@ function Header() {
                 <PageButton name="Browse" ref="/Browse" />
                 <PageButton name="My Page" ref="/MyPage" />
             </nav>
-            <PageButton name="Testing space" ref="/TestingPage"/>
         </div>
     )
 }
