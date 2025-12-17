@@ -8,8 +8,8 @@ import "./css/RestaurantSpecific.css"
 
 function RestaurantSpecific(props : {restaurant : Restaurant}) {
     const [saved, setSaved] = useState<Boolean>(false);
-    const [isRestaurantOwner] = useState(true);
-    const [bgColor, setBgColor] = useState("#007bff"); // default background
+    const [isRestaurantOwner] = useState(false);
+    const [bgColor, setBgColor] = useState("#b28f65ff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
 

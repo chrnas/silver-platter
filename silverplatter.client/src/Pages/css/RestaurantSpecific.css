@@ -89,7 +89,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    border-top: 2rem var(--secondary-bg) solid;
+    border-top: 2rem var(--seperator) solid;
 }
 
 .Menu {
