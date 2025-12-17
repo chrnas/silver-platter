@@ -87,6 +87,11 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
         });
     }
 
+    function toggleIsRestaurantOwner() {
+        const isRestaurantOwnerToggled = isRestaurantOwner ? false : true;
+        setIsRestaurantOwner(isRestaurantOwnerToggled);
+    }
+
     return (
         <div className={`RestaurantFrontPage custom-theme`}  
             style={{
@@ -194,7 +199,9 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 ))}
             </section>
 
-
+            <button onClick={toggleIsRestaurantOwner}>
+                Toggle Restaurant Owner
+            </button>
         
         </div>
     )
