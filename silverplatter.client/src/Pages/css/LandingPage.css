@@ -16,7 +16,31 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    outline: dotted red 1px;
+}
+
+
+.Button {
+    outline: 2px white solid;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.Welcome-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;         
+}
+
+.Welcome-inner h1 {
+    font-size: 5rem;
+    text-align: center;
+}
+
+.Welcome-actions {
+    margin-top: 2rem;
 }
 
 /* Background positioned below header (5rem) and behind content */
@@ -40,10 +64,3 @@
     object-fit: cover;
 }
 
-
-.Button {
-    outline: 2px white solid;
-    width: 10rem;
-    height: 10rem;
-    border-radius: 50%;
-}

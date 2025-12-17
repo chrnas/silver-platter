@@ -56,7 +56,6 @@ function Browse() {
                 <h1>Can't find what you're looking for?</h1>
                 <div style={{display: "flex", flexDirection: "row", gap: "1rem"}}>
                     <input onChange={handleFilterChange} type="search" name="RestaurantSearch" id="RestaurantSearch" placeholder={"I need McDonalds?"} />
-                    <button type="button">Go</button>
                 </div>
             </div>
             <div className='Categories'>

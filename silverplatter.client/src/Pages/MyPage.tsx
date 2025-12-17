@@ -56,7 +56,7 @@ function MyPage() {
         setSelected(prev => prev.includes(opt) ? prev.filter(p => p !== opt) : [...prev, opt]);
     }
 
-    function reset() {
+    function reset(e: React.MouseEvent<HTMLButtonElement>) {
         userService.getById(1).then(userSetting => {
             setSliderA(userSetting.budget);
             setSliderB(userSetting.preferedRating);
@@ -65,9 +65,18 @@ function MyPage() {
         allergyService.getByUserId(1).then(allergies => {
             setSelected(allergies.map(allergy => allergy.name))
         })
+        const button = e.target as HTMLButtonElement;
+        console.log(e)
+        button.className = 'ss-reset';
+        // force reflow so removing/adding class restarts animation
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        void button.offsetWidth;
+        button.className = 'flash-reset';
+        // remove class after animation ends
+        window.setTimeout(() => button.className = 'ss-reset', 200);
     }
 
-    async function save() {
+    async function save(e: React.MouseEvent<HTMLButtonElement>) {
         console.log(user);
         
         try {
@@ -99,6 +108,15 @@ function MyPage() {
             );
 
             console.log("Allergies saved successfully");
+            const button = e.target as HTMLButtonElement;
+            console.log(e)
+            button.className = 'ss-save';
+            // force reflow so removing/adding class restarts animation
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            void button.offsetWidth;
+            button.className = 'flash-success';
+            // remove class after animation ends
+            window.setTimeout(() => button.className = 'ss-save', 200);
         }
         } catch (err) {
             console.error("Failed to save preferences", err);
@@ -112,7 +130,6 @@ function MyPage() {
                 <section className='FavoriteRestaurants'>
                     <h1>My Favorite Restaurants</h1>
                     {myRestaurants.length > 0 ? myRestaurants.map(restaurant => {
-                        console.log("Restaurant", restaurant.name); 
                         return (
                             <RestaurantButton key={restaurant.id} restaurant={restaurant}/>
                         )
@@ -182,10 +199,10 @@ function MyPage() {
                                 </div>
                             </div>
                         </nav>
-                        <button className='ss-reset' onClick={() => reset()}>
+                        <button className='ss-reset' onClick={reset}>
                             Reset Preferences
                         </button>
-                        <button className='ss-save' onClick={() => save()}>
+                        <button className='ss-save' onClick={save}>
                             Save Preferences
                         </button>
                     </div>

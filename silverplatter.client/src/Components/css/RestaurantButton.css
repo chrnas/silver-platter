@@ -30,7 +30,7 @@
 }
 
 .RestaurantName {
-    margin-top: -3rem;
+    margin-top: -2rem;
 }
 
 #SingleRestaurantButton:hover {
@@ -40,10 +40,10 @@
 
 .badge {
   font-weight: bold;
-  color: #FFD700;           /* golden text */
-  background-color: #222;    /* dark background */
-  padding: 0.2rem 0.5rem;
+  padding: 0.2rem 0.2rem;
   border-radius: 0.25rem;
   min-width: 2rem;
-  text-align: center;
+  max-width: 15rem;
+  margin: 0.2rem;
+  margin-left: -0.5rem;
 }
