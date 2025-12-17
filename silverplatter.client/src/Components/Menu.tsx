@@ -57,12 +57,6 @@ const Menu: React.FC<MenuProps> = ({restaurantId}) => {
               <p className="featured-dish">{randomItem?.name}</p>
               <p>{randomItem?.description}</p>
             </div>
-
-            <div className="reserve-card">
-              <h4>Book a table</h4>
-              <p>Reserve your spot for dinner service.</p>
-              <button className="btn-outline">Reserve</button>
-            </div>
           </aside>
         </div>
       </main>
