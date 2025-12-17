@@ -5,8 +5,11 @@ import type { Restaurant } from "../Types/Restaurant";
 import type { RestaurantFavorite } from "../Types/RestaurantFavorite";
 import { useEffect, useState } from "react";
 import "./css/RestaurantSpecific.css"
+import type { BookableTable } from "../Types/BookableTable";
+import { bookingTableService } from "../service/BookingTableService";
 
 function RestaurantSpecific(props : {restaurant : Restaurant}) {
+    const [bookableTables, setBookableTables] = useState<BookableTable[]>([]);
     const [saved, setSaved] = useState<Boolean>(false);
     const [isRestaurantOwner] = useState(false);
     const [bgColor, setBgColor] = useState("#b28f65ff"); // default background
@@ -29,6 +32,12 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 setSaved(restaurantIds.includes(props.restaurant.id));
             })
             .catch(err => console.error("Failed to load favorites", err));
+
+        bookingTableService.getByRestaurantId(1).then(tables => {
+            setBookableTables(tables);
+            console.log("Loaded tables:", tables);
+        });
+
     }, [props.restaurant.id]);
 
 
@@ -142,6 +151,15 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 <div className="Gallery">
                     <Gallery/>
                 </div>
+            </section>
+
+            <section>
+                {bookableTables.map((table) => (
+                    <div key={table.id} className="TableCard">
+                        <h3>Table for {table.name} people</h3>
+                        <button onClick={() => console.log(`Booked table ${table.id}`)}>Book Now</button>
+                    </div>
+                ))}
             </section>
 
 

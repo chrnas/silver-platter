@@ -31,6 +31,21 @@ export const bookingTableService = {
         return response.json();
     },
 
+     getByRestaurantId: async (id: number): Promise<BookableTable[]> => {
+        const response = await fetch(`api/bookingtable/restaurant/${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+
     create: async (entry : Omit<BookableTable, "id">): Promise<BookableTable> => {
         const response = await fetch(`api/bookingtable`, {
             headers: {

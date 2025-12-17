@@ -75,6 +75,38 @@ namespace SilverPlatter.Server.Repositories
             return table;
         }
 
+        public BookingTable? GetByRestaurantId(int id)
+        {
+            BookingTable? table = null;
+
+            using MySqlConnection connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            using MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandText = @"
+                SELECT BookingTableId, Name, Description, Places, RestaurantId
+                FROM BookingTables
+                WHERE RestaurantId = @id;
+            ";
+            command.Parameters.AddWithValue("@id", id);
+
+            using MySqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                table = new BookingTable
+                {
+                    Id = reader.GetInt32("BookingTableId"),
+                    Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
+                    Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                    Places = reader.GetInt32("Places"),
+                    RestaurantId = reader.GetInt32("RestaurantId")
+                };
+            }
+
+            return table;
+        }
+
         public BookingTable Add(BookingTable table)
         {
             using MySqlConnection connection = new MySqlConnection(_connectionString);
