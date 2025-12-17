@@ -25,6 +25,7 @@ CREATE TABLE BookingTables (
     Name VARCHAR(255),
     Description TEXT,
     Places INT NOT NULL,
+    Booked BOOLEAN,
     RestaurantId INT NOT NULL,
     FOREIGN KEY (RestaurantId) REFERENCES Restaurants(RestaurantId) ON DELETE CASCADE
 ) ENGINE=InnoDB;

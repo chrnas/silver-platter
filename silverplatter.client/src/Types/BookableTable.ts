@@ -3,5 +3,6 @@ export interface BookableTable {
     name: string;
     description: string;
     places: number;
+    booked: boolean;
     restaurantId: number;
 }

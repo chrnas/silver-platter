@@ -3,21 +3,36 @@ import Menu from "../Components/Menu";
 import { restaurantFavoriteService } from "../service/RestaurantFavoriteService";
 import type { Restaurant } from "../Types/Restaurant";
 import type { RestaurantFavorite } from "../Types/RestaurantFavorite";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./css/RestaurantSpecific.css"
+import type { BookableTable } from "../Types/BookableTable";
+import { bookingTableService } from "../service/BookingTableService";
 
 function RestaurantSpecific(props : {restaurant : Restaurant}) {
+    const [bookableTables, setBookableTables] = useState<BookableTable[]>([]);
     const [saved, setSaved] = useState<Boolean>(false);
     const [isRestaurantOwner, setIsRestaurantOwner] = useState(false);
     const [bgColor, setBgColor] = useState("#b28f65ff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
 
+    const bookingListRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBookingList = () => {
+        if (bookingListRef.current) {
+        bookingListRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     /** Check if restaurant is among already favorite restaurants,
      * if it is toggle the save button to highlight as saved. 
      */
     useEffect(() => {
         if (!props.restaurant) return;
+
+        bookingTableService.getByRestaurantId(props.restaurant.id).then(tables => {
+            setBookableTables(tables);
+        });
 
         restaurantFavoriteService.getByUserId(1)
             .then(favorites => {
@@ -29,6 +44,7 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 setSaved(restaurantIds.includes(props.restaurant.id));
             })
             .catch(err => console.error("Failed to load favorites", err));
+
     }, [props.restaurant.id]);
 
 
@@ -55,9 +71,20 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
         restaurantFavoriteService.deleteByUserAndRestaurant(1, restaurant.id).then(() => setSaved(false));
     }
 
-    function toggleIsRestaurantOwner() {
-        const isRestaurantOwnerToggled = isRestaurantOwner ? false : true;
-        setIsRestaurantOwner(isRestaurantOwnerToggled);
+    function bookTable(table: BookableTable) {
+        table.booked = true;
+        bookingTableService.update(table).then(table => {
+            const filteredTables = bookableTables.filter(t => t.id !== table.id);
+            setBookableTables([...filteredTables, table].sort((a,b) => a.id - b.id))
+        });
+    }
+
+    function unBookTable(table: BookableTable) {
+        table.booked = false;
+        bookingTableService.update(table).then(table => {
+            const filteredTables = bookableTables.filter(t => t.id !== table.id);
+            setBookableTables([...filteredTables, table].sort((a,b) => a.id - b.id))
+        });
     }
 
     return (
@@ -84,7 +111,7 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 </section>
 
                 <section className="BookTable">
-                    <button id="BookButton" onClick={() => console.log("Booked")}>
+                    <button id="BookButton" onClick={scrollToBookingList}>
                         <h2>Book Table</h2>
                     </button>
                     <button id="SaveButton" onClick={() => {
@@ -149,9 +176,25 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 </div>
             </section>
 
-            <button onClick={toggleIsRestaurantOwner}>
-                Toggle Restaurant Owner
-            </button>
+            <section ref={bookingListRef}>
+                {bookableTables.map((table) => (
+                    <div key={table.id}>
+                    <h3>Book table tonight, {table.name} in {table.description} for {table.places} people</h3>
+                    {!table.booked && (
+                        <button onClick={() => bookTable(table)}>
+                        Book now
+                        </button>
+                    )}
+                    {table.booked && (
+                        <button onClick={() => unBookTable(table)}>
+                        Unbook
+                        </button>
+                    )}
+                    </div>
+                ))}
+            </section>
+
+
         
         </div>
     )

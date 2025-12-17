@@ -44,6 +44,20 @@ public class BookingTableController : ControllerBase
         }
     }
 
+    [HttpGet("restaurant/{id}")]
+    public IActionResult GetByRestaurantId(int id)
+    {
+        try
+        {
+            var tables = _repo.GetByRestaurantId(id);
+            return Ok(tables);
+        }
+        catch
+        {
+            return BadRequest("Failed to get all tables by restaurantId");
+        }
+    }
+
     [HttpPost]
     public IActionResult Create(BookingTable table)
     {

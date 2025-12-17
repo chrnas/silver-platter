@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Relational;
 using SilverPlatter.Server.Models;
 
 namespace SilverPlatter.Server.Repositories
@@ -23,7 +24,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand command = new MySqlCommand();
             command.Connection = connection;
             command.CommandText = @"
-                SELECT BookingTableId, Name, Description, Places, RestaurantId
+                SELECT BookingTableId, Name, Description, Places, Booked, RestaurantId
                 FROM BookingTables;
             ";
 
@@ -53,7 +54,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand command = new MySqlCommand();
             command.Connection = connection;
             command.CommandText = @"
-                SELECT BookingTableId, Name, Description, Places, RestaurantId
+                SELECT BookingTableId, Name, Description, Places, Booked, RestaurantId
                 FROM BookingTables
                 WHERE BookingTableId = @id;
             ";
@@ -68,11 +69,45 @@ namespace SilverPlatter.Server.Repositories
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
                     Places = reader.GetInt32("Places"),
+                    Booked = reader.GetBoolean("Booked"),
                     RestaurantId = reader.GetInt32("RestaurantId")
                 };
             }
 
             return table;
+        }
+
+        public List<BookingTable> GetByRestaurantId(int id)
+        {
+            List<BookingTable> tables = new List<BookingTable>();
+
+            using MySqlConnection connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            using MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandText = @"
+                SELECT BookingTableId, Name, Description, Places, Booked, RestaurantId
+                FROM BookingTables
+                WHERE RestaurantId = @id;
+            ";
+            command.Parameters.AddWithValue("@id", id);
+
+            using MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                tables.Add(new BookingTable
+                {
+                    Id = reader.GetInt32("BookingTableId"),
+                    Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
+                    Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                    Places = reader.GetInt32("Places"),
+                    Booked = reader.GetBoolean("Booked"),
+                    RestaurantId = reader.GetInt32("RestaurantId")
+                });
+            }
+
+            return tables;
         }
 
         public BookingTable Add(BookingTable table)
@@ -84,12 +119,13 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand insertCommand = new MySqlCommand();
             insertCommand.Connection = connection;
             insertCommand.CommandText = @"
-                INSERT INTO BookingTables (Name, Description, Places, RestaurantId)
-                VALUES (@name, @description, @places, @restaurantId);
+                INSERT INTO BookingTables (Name, Description, Places, Booked, RestaurantId)
+                VALUES (@name, @description, @places, @booked, @restaurantId);
             ";
             insertCommand.Parameters.AddWithValue("@name", table.Name);
             insertCommand.Parameters.AddWithValue("@description", table.Description);
             insertCommand.Parameters.AddWithValue("@places", table.Places);
+            insertCommand.Parameters.AddWithValue("@booked", table.Booked);
             insertCommand.Parameters.AddWithValue("@restaurantId", table.RestaurantId);
 
             insertCommand.ExecuteNonQuery();
@@ -98,7 +134,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand selectCommand = new MySqlCommand();
             selectCommand.Connection = connection;
             selectCommand.CommandText = @"
-                SELECT BookingTableId, Name, Description, Places, RestaurantId
+                SELECT BookingTableId, Name, Description, Places, Booked, RestaurantId
                 FROM BookingTables
                 WHERE BookingTableId = LAST_INSERT_ID();
             ";
@@ -112,6 +148,7 @@ namespace SilverPlatter.Server.Repositories
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
                     Places = reader.GetInt32("Places"),
+                    Booked = reader.GetBoolean("Booked"),
                     RestaurantId = reader.GetInt32("RestaurantId")
                 };
             }
@@ -132,6 +169,7 @@ namespace SilverPlatter.Server.Repositories
                 SET Name = @name,
                     Description = @description,
                     Places = @places,
+                    Booked = @booked,
                     RestaurantId = @restaurantId
                 WHERE BookingTableId = @id;
             ";
@@ -139,6 +177,7 @@ namespace SilverPlatter.Server.Repositories
             updateCommand.Parameters.AddWithValue("@name", table.Name);
             updateCommand.Parameters.AddWithValue("@description", table.Description);
             updateCommand.Parameters.AddWithValue("@places", table.Places);
+            updateCommand.Parameters.AddWithValue("@booked", table.Booked);
             updateCommand.Parameters.AddWithValue("@restaurantId", table.RestaurantId);
 
             updateCommand.ExecuteNonQuery();
@@ -147,7 +186,7 @@ namespace SilverPlatter.Server.Repositories
             using MySqlCommand selectCommand = new MySqlCommand();
             selectCommand.Connection = connection;
             selectCommand.CommandText = @"
-                SELECT BookingTableId, Name, Description, Places, RestaurantId
+                SELECT BookingTableId, Name, Description, Places, Booked, RestaurantId
                 FROM BookingTables
                 WHERE BookingTableId = @id;
             ";
@@ -162,6 +201,7 @@ namespace SilverPlatter.Server.Repositories
                     Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
                     Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
                     Places = reader.GetInt32("Places"),
+                    Booked = reader.GetBoolean("Booked"),
                     RestaurantId = reader.GetInt32("RestaurantId")
                 };
             }
