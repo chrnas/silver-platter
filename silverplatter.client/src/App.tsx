@@ -4,7 +4,6 @@ import Browse from './Pages/Browse';
 import RestaurantSpecific from './Pages/RestaurantSpecific';
 import Restaurants from './Pages/Restaurants';
 import Header from './Pages/Header';
-import TestingPage from './Pages/TestingPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import { restaurantService } from './service/RestaurantService';
@@ -34,8 +33,6 @@ function App() {
                         )
                     })}
                     </Route>    
-                    <Route path='/TestingPage' element={<TestingPage/>}/>
-                    
                 </Routes>
             </Router>
         </div>
