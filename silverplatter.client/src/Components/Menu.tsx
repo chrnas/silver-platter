@@ -3,35 +3,6 @@ import "./css/Menu.css";
 import type { MenuItem } from "../Types/MenuItem";
 import { menuEntryService } from "../service/MenuEntryService";
 
-/*
-const sampleMenu: MenuCategory[] = [
-  {
-    id: "starters",
-    title: "Starters",
-    items: [
-      { id: 1, name: "Charred Octopus", description: "Smoky paprika • Lemon aioli", allergy: "Gluten"},
-      { id: 2, name: "Heirloom Tomato", description: "Burrata • Basil • Aged balsamic", price: "$10" },
-    ],
-  },
-  {
-    id: "mains",
-    title: "Mains",
-    items: [
-      { id: 11, name: "Pan-Seared Salmon", description: "Herb butter • Seasonal veg", price: "$24", tag: "Chef" },
-      { id: 12, name: "Prime Ribeye", description: "Truffle mash • Charred broccolini", price: "$32" },
-    ],
-  },
-  {
-    id: "desserts",
-    title: "Desserts",
-    items: [
-      { id: 21, name: "Warm Chocolate Pudding", description: "Vanilla cream", price: "$8" },
-      { id: 22, name: "Lemon Tart", description: "Citrus curd • Almond crust", price: "$9" },
-    ],
-  },
-];*/
-
-
 type MenuProps = {
   restaurantId: number;
 };
