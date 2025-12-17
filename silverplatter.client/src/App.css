@@ -1,0 +1,21 @@
+﻿@import url('./colorPalette.css');
+
+#root {
+    height: 100vh;
+}
+
+.Scaffold {
+    width: 100%;
+    height: 100vh;
+}
+
+button {
+    background-color: var(--accent);
+    outline: 1px white solid;
+}
+
+button:hover {
+    background-color: var(--accent-hover);
+    outline: 1px rgb(116, 176, 110) solid;
+    transition: ease 300ms;
+}

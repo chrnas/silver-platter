@@ -1,0 +1,66 @@
+.LandingPage {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 5rem);;           /* use min-height so background covers full viewport */
+    position: relative;          /* allow absolutely positioned background */
+    overflow: hidden;            /* keep video clipped to viewport */
+}
+
+.Content {
+    position: relative;          
+    background-color: rgba(0, 0, 0, 0.5);
+    /* account for the 5rem header so content centers in remaining viewport */
+    height: calc(100vh - 5rem);
+    z-index: 2;                  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.Button {
+    outline: 2px white solid;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+.Welcome-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;         
+}
+
+.Welcome-inner h1 {
+    font-size: 5rem;
+    text-align: center;
+}
+
+.Welcome-actions {
+    margin-top: 2rem;
+}
+
+/* Background positioned below header (5rem) and behind content */
+.Background {
+    position: absolute;
+    top: 0;                   /* start below the header */
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;                  /* behind .Content (z-index:2) */
+    pointer-events: none;
+    max-height: calc(100vh - 5rem);
+    overflow: hidden;            /* prevent video from overflowing and producing scrollbars */
+}
+
+/* Center & cover the video so it always fills the container without overflow */
+.Background video {
+    position: absolute;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+}
+

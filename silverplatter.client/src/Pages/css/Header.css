@@ -1,0 +1,20 @@
+
+.Header {
+    width: 100vw;
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--seperator);
+    outline: solid 2px var(--primary-fg);
+}
+
+.HeaderItems {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    gap: 5%;
+}

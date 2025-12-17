@@ -1,0 +1,101 @@
+
+
+.RestaurantFrontPage {
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.65));
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Custom theme */
+.custom-theme {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  flex-direction: var(--flex-direction);
+}
+
+
+.RestaurantFrontSection {
+    background-image: url("/src/assets/2431225-uhd_3840_2160_24fps.gif");
+    background-size: 100vw;
+    height: 500px;
+    margin-top: -0rem;
+}
+
+.RestaurantHeader{
+    padding: 1rem;
+    padding-left: 5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: end;
+    background-color: rgba(0, 0, 0, 0.449);
+    width: fit-content;
+    border-bottom-right-radius: 1rem;
+}
+
+.Information {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin-left: 5rem;
+    gap: 5%;
+}
+
+.Information div {
+    width: 40%;
+}
+
+.Description {
+    padding: 2rem;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.433), rgba(42, 82, 29, 0.614));
+    border-radius: 1rem;
+}
+
+#Address {
+    color: rgb(154, 154, 154);
+}
+
+.BookTable {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#BookButton {
+    min-width: 200px;
+    width: 5%;
+    height: 6rem;
+}
+
+#SaveButton {
+    background-color: rgb(33, 88, 47);
+}
+
+#SaveButton:hover {
+    background-color: rgb(225, 202, 69);
+    transition: ease 300ms;
+}
+
+.Utilities {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-top: 2rem var(--seperator) solid;
+}
+
+.Menu {
+    width: 60%;
+}
+
+.Gallery {
+    width: 35%;
+}
