@@ -2,7 +2,7 @@ import type { MenuItem } from "../Types/MenuItem";
 
 export const menuEntryService = {
     getAll: async (): Promise<MenuItem[]> => {
-        const response = await fetch(`api/menuentry`, {
+        const response = await fetch(`/api/menuentry`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -17,7 +17,22 @@ export const menuEntryService = {
     },
 
     getById: async (id: number): Promise<MenuItem> => {
-        const response = await fetch(`api/menuentry/id=${id}`, {
+        const response = await fetch(`/api/menuentry/id=${id}`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message || "API error");
+        }
+
+        return response.json();
+    },
+
+    getByRestaurantId: async (id: number): Promise<MenuItem[]> => {
+        const response = await fetch(`/api/menuentry/restaurant/${id}`, {
             headers: {
                 "Content-Type": "application/json"
             }
@@ -32,7 +47,7 @@ export const menuEntryService = {
     },
 
     create: async (entry : Omit<MenuItem, "id">): Promise<MenuItem> => {
-        const response = await fetch(`api/menuentry`, {
+        const response = await fetch(`/api/menuentry`, {
             headers: {
                 "Content-Type": "application/json"
             }, 
@@ -50,7 +65,7 @@ export const menuEntryService = {
     },
     
     update: async (entry: MenuItem): Promise<MenuItem> => {
-        const response = await fetch(`api/menuentry/id=${entry.id}`, {
+        const response = await fetch(`/api/menuentry/id=${entry.id}`, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -69,7 +84,7 @@ export const menuEntryService = {
         
 
     delete: async (id: number): Promise<void> => {
-        const response = await fetch(`api/menuentry/id=${id}`, {
+        const response = await fetch(`/api/menuentry/id=${id}`, {
             headers: {
                 "Content-Type": "application/json"
             },
