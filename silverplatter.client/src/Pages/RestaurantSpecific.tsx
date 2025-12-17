@@ -3,7 +3,7 @@ import Menu from "../Components/Menu";
 import { restaurantFavoriteService } from "../service/RestaurantFavoriteService";
 import type { Restaurant } from "../Types/Restaurant";
 import type { RestaurantFavorite } from "../Types/RestaurantFavorite";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./css/RestaurantSpecific.css"
 import type { BookableTable } from "../Types/BookableTable";
 import { bookingTableService } from "../service/BookingTableService";
@@ -15,6 +15,14 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
     const [bgColor, setBgColor] = useState("#b28f65ff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
+
+    const bookingListRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBookingList = () => {
+        if (bookingListRef.current) {
+        bookingListRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
     /** Check if restaurant is among already favorite restaurants,
      * if it is toggle the save button to highlight as saved. 
@@ -103,7 +111,7 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 </section>
 
                 <section className="BookTable">
-                    <button id="BookButton" onClick={() => console.log("Booked")}>
+                    <button id="BookButton" onClick={scrollToBookingList}>
                         <h2>Book Table</h2>
                     </button>
                     <button id="SaveButton" onClick={() => {
@@ -168,7 +176,7 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 </div>
             </section>
 
-            <section>
+            <section ref={bookingListRef}>
                 {bookableTables.map((table) => (
                     <div key={table.id}>
                     <h3>Book table tonight, {table.name} in {table.description} for {table.places} people</h3>
