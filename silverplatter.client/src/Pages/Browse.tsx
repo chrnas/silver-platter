@@ -74,7 +74,7 @@ function Browse() {
                 <section id="Budget" className='Category'>
                     <h2 className='CategoryName'>Most Budget Friendly</h2>
                     <div className='RList'>
-                        {filteredRestaurants?.sort((a, b) => b.budget - a.budget).map(restaurant => {
+                        {filteredRestaurants?.sort((a, b) => a.budget - b.budget).map(restaurant => {
                             return (
                                     <RestaurantButton restaurant={restaurant}/>
                             );

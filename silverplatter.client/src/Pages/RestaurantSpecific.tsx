@@ -136,7 +136,7 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
 
             <section className="Utilities">
                 <div className="Menu">
-                    <Menu/>
+                    <Menu restaurantId={props.restaurant.id}/>
                 </div>
 
                 <div className="Gallery">

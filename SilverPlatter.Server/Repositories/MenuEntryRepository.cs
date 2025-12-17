@@ -75,6 +75,37 @@ namespace SilverPlatter.Server.Repositories
             return menuEntry;
         }
 
+        public List<MenuEntry> GetByRestaurantId(int id)
+        {
+            List<MenuEntry> menuEntries = new List<MenuEntry>();
+
+            using MySqlConnection connection = new MySqlConnection(_connectionString);
+            connection.Open();
+
+            using MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandText = @"
+                SELECT MenuEntryId, Name, Description, Allergy, RestaurantId
+                FROM MenuEntries
+                WHERE RestaurantId = @id;
+            ";
+            command.Parameters.AddWithValue("@id", id);
+
+            using MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                menuEntries.Add(new MenuEntry
+                {
+                    Id = reader.GetInt32("MenuEntryId"),
+                    Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString("Name"),
+                    Description = reader.IsDBNull(reader.GetOrdinal("Description")) ? null : reader.GetString("Description"),
+                    Allergy = reader.IsDBNull(reader.GetOrdinal("Allergy")) ? null : reader.GetString("Allergy"),
+                    RestaurantId = reader.GetInt32("RestaurantId")
+                });
+            }
+
+            return menuEntries;
+        }
         public MenuEntry Add(MenuEntry entry)
         {
             using MySqlConnection connection = new MySqlConnection(_connectionString);

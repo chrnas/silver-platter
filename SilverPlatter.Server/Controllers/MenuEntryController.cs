@@ -44,6 +44,19 @@ public class MenuEntryController : ControllerBase
         }
     }
 
+    [HttpGet("restaurant/{restaurantId}")]
+    public IActionResult GetByRestaurantId(int restaurantId)
+    {
+        try
+        {
+            var menuEntries = _repo.GetByRestaurantId(restaurantId);
+            return Ok(menuEntries);
+        } catch
+        {
+            return BadRequest("Failed to get all menuEntries");
+        }
+    }
+
     [HttpPost]
     public IActionResult Create(MenuEntry entry)
     {

@@ -5,6 +5,7 @@ namespace SilverPlatter.Server.Repositories
     {
         List<MenuEntry> GetAll();
         MenuEntry? GetById(int id);
+        List<MenuEntry> GetByRestaurantId(int id);
         MenuEntry Add(MenuEntry table);
         MenuEntry Update(MenuEntry table);
         bool RemoveById(int id);
