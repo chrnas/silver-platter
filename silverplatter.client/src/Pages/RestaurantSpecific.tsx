@@ -11,7 +11,7 @@ import { bookingTableService } from "../service/BookingTableService";
 function RestaurantSpecific(props : {restaurant : Restaurant}) {
     const [bookableTables, setBookableTables] = useState<BookableTable[]>([]);
     const [saved, setSaved] = useState<Boolean>(false);
-    const [isRestaurantOwner] = useState(false);
+    const [isRestaurantOwner, setIsRestaurantOwner] = useState(false);
     const [bgColor, setBgColor] = useState("#b28f65ff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
@@ -85,6 +85,11 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
             const filteredTables = bookableTables.filter(t => t.id !== table.id);
             setBookableTables([...filteredTables, table].sort((a,b) => a.id - b.id))
         });
+    }
+
+    function toggleIsRestaurantOwner() {
+        const isRestaurantOwnerToggled = isRestaurantOwner ? false : true;
+        setIsRestaurantOwner(isRestaurantOwnerToggled);
     }
 
     return (
@@ -194,7 +199,9 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 ))}
             </section>
 
-
+            <button onClick={toggleIsRestaurantOwner}>
+                Toggle Restaurant Owner
+            </button>
         
         </div>
     )
