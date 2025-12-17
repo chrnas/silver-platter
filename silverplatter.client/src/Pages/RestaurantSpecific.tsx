@@ -8,7 +8,7 @@ import "./css/RestaurantSpecific.css"
 
 function RestaurantSpecific(props : {restaurant : Restaurant}) {
     const [saved, setSaved] = useState<Boolean>(false);
-    const [isRestaurantOwner] = useState(false);
+    const [isRestaurantOwner, setIsRestaurantOwner] = useState(false);
     const [bgColor, setBgColor] = useState("#b28f65ff"); // default background
     const [textColor, setTextColor] = useState("#ffffff"); // default text
     const [flexDirection, setFlexDirection] = useState<"row" | "column">("column"); // flexlayout
@@ -53,6 +53,11 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
      */
     function removeFromFavorites(restaurant : Restaurant) {
         restaurantFavoriteService.deleteByUserAndRestaurant(1, restaurant.id).then(() => setSaved(false));
+    }
+
+    function toggleIsRestaurantOwner() {
+        const isRestaurantOwnerToggled = isRestaurantOwner ? false : true;
+        setIsRestaurantOwner(isRestaurantOwnerToggled);
     }
 
     return (
@@ -144,7 +149,9 @@ function RestaurantSpecific(props : {restaurant : Restaurant}) {
                 </div>
             </section>
 
-
+            <button onClick={toggleIsRestaurantOwner}>
+                Toggle Restaurant Owner
+            </button>
         
         </div>
     )
